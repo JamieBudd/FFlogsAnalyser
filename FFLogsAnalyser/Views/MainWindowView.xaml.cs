@@ -18,18 +18,19 @@ namespace FFLogsAnalyser
 {
     
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindowView : Window
     {
+        /*
         static List<Rankings> rankings;
         static ReportFightID reportfightID;
         static List<ReportEvent> reportEvent = new List<ReportEvent>();
-        public MainWindow()
+        public ShellView()
         {
             InitializeComponent();
         }
-
+        
         private void Load(object sender, RoutedEventArgs e)
         {
             //set combo box "Region" values
@@ -151,5 +152,6 @@ namespace FFLogsAnalyser
                     break;
             }
         }
+        */
     }
 }

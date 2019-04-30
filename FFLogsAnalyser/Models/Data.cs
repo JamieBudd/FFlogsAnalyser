@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace FFLogsAnalyser
 {
     #region Region enum
 
-    //list of different Regions in ffxiv
+    /// <summary>
+    /// list of different Regions in ffxiv
+    /// </summary>
     public enum Region
     {
         EU,
@@ -18,10 +15,11 @@ namespace FFLogsAnalyser
 
     #endregion
 
-
     #region EU Servers
 
-    //List of servers in the EU region
+    /// <summary>
+    /// List of servers in the EU region
+    /// </summary>
     public enum ServerEU
     {
         Cerberus,
@@ -40,7 +38,9 @@ namespace FFLogsAnalyser
 
     #region NA Servers
 
-    //List of Servers in the NA Region
+    /// <summary>
+    /// List of Servers in the NA Region
+    /// </summary>
     public enum ServerNA
     {
         Adamantoise,
@@ -73,7 +73,9 @@ namespace FFLogsAnalyser
 
     #region JP Servers
 
-    //List of Servers in the JP region
+    /// <summary>
+    /// List of Servers in the JP region
+    /// </summary>
     public enum ServerJP
     {
         Aegis,
@@ -113,7 +115,10 @@ namespace FFLogsAnalyser
     #endregion
 
     #region Buff names
-    //List of buff names (for use in the Buff timeline)
+
+    /// <summary>
+    /// List of buff names (for use in the Buff timeline)
+    /// </summary>
     public enum Buffs
     {
         Battle_Litany,

@@ -21,7 +21,6 @@ namespace FFLogsAnalyser
     {
         public ShowParses()
         {
-            InitializeComponent();
         }
     }
 }

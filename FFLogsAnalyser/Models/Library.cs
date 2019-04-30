@@ -25,7 +25,8 @@ namespace FFLogsAnalyser
         /// <typeparam name="T">The class in which to put the json data</typeparam>
         /// <param name="url">the url of the json data</param>
         /// <returns></returns>
-        public static T _download_serialized_json_data<T>(string url) where T : new()
+
+        public static async Task<T> _download_serialized_json_data<T>(string url) where T : new()
         {
             using (var w = new WebClient())
             {
@@ -33,7 +34,7 @@ namespace FFLogsAnalyser
                 // attempt to download JSON data as a string
                 try
                 {
-                    json_data = w.DownloadString(url);
+                    json_data = await w.DownloadStringTaskAsync(url);
                 }
                 catch (Exception) { }
                 // if string with JSON data is not empty, deserialize it to class and return its instance 
@@ -52,9 +53,9 @@ namespace FFLogsAnalyser
         /// <param name="Region">Region the Server is in</param>
         /// <returns></returns>
 
-        public static string characterparse(string[] Name, string Server, string Region)
+        public static string characterparse(string FirstName, string LastName, string Server, string Region)
         {
-            return "https://www.fflogs.com:443/v1/rankings/character/" + Name[0] + "%20" + Name[1] + "/" + Server + "/" + Region + "?" + APIKey;
+            return "https://www.fflogs.com:443/v1/rankings/character/" + FirstName + "%20" + LastName + "/" + Server + "/" + Region + "?" + APIKey;
         }
 
         /// <summary>
