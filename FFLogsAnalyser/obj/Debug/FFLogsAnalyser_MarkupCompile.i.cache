@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\App.xaml
-2274727827
+7-1202117922
 
-19-858849014
+32-1271799335
 721209684996
-Views\MainWindowView.xaml;Views\ShowParses.xaml;
+Views\MainWindowView.xaml;Views\ShellView.xaml;Views\TimeLineViews\TimeLineMarkerElementView.xaml;Views\TimeLineViews\TimeLineMarkerView.xaml;Views\TimeLineViews\TimeLineBaseView.xaml;Views\TimeLineViews\TimeLineElementView.xaml;Views\TimeLineViews\TimeLineView.xaml;
 
-False
+True
 

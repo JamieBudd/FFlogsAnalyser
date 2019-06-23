@@ -5,28 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
-using FFLogsAnalyser.Views;
+using FFLogsAnalyser;
 using PropertyChanged;
 
 namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]    
 
-    public class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : Conductor<object>.Collection.OneActive , IBaseViewModel
     {
         #region Default Constructor
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(TimeLineViewModel timeLineVM)
         {
             //sets the default value of _regionselected and Enumsource
             _regionselected = "EU";
             EnumSource = Enum.GetValues(typeof(ServerEU));
+            GetParse = new RelayCommand(ShowParse);
+            _timelineVM = timeLineVM;
         }
 
         #endregion
 
         #region Private Members
 
+        private TimeLineViewModel _timelineVM;
         private string _serverselected;
         private string _regionselected;
         private string _firstname;
@@ -35,6 +38,8 @@ namespace FFLogsAnalyser.ViewModels
         #endregion
 
         #region Public Members
+
+        public int SelectedParse { get; set; }
 
         /// <summary>
         /// The first name that is inputted by the user
@@ -105,6 +110,7 @@ namespace FFLogsAnalyser.ViewModels
                 }
             }
         }
+
         /// <summary>
         /// Shows the list of Character Parses based on user input
         /// </summary>
@@ -130,6 +136,21 @@ namespace FFLogsAnalyser.ViewModels
                 CharacterParses = await Library._download_serialized_json_data<List<Rankings>>(rankingsUrl);
             }
         }
+
+        public string Test { get; set; }
+
+
+        public ICommand GetParse { get; set; }
+
+        public TimeLineBaseViewModel tlbv;
+
+        public void ShowParse()
+        {
+            ActivateItem(tlbv = new TimeLineBaseViewModel(CharacterParses[this.SelectedParse]));
+            tlbv.AddCharacterParseTimeline();
+            this.Test = "Success"+ this.SelectedParse;
+        }
+
         #endregion
 
     }

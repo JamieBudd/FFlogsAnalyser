@@ -126,7 +126,8 @@ namespace FFLogsAnalyser
         Ley_Lines,
         Battle_Voice,
         Chain_Strategem,
-        Blood_For_Blood
+        Blood_For_Blood,
+        Vulnerability_Up
     }
 
     #endregion

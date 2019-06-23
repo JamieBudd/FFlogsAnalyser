@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Input;
 
-namespace FFLogsAnalyser
+namespace FFLogsAnalyser.ViewModels
 {
     public class RelayCommand : ICommand
     {

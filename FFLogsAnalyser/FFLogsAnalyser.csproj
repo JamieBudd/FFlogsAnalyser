@@ -80,26 +80,68 @@
     <Compile Include="FFlogsClass\Rankings.cs" />
     <Compile Include="FFlogsClass\ReportEvent.cs" />
     <Compile Include="FFlogsClass\ReportFightID.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="Views\ShowParses.xaml.cs">
-      <DependentUpon>ShowParses.xaml</DependentUpon>
+    <Compile Include="Models\TimeLineBuff.cs" />
+    <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
+    <Compile Include="ViewModels\HelperModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineBaseViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineElementViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineMarkerElementViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineMarkerViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModel.cs" />
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Page Include="Views\MainWindowView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Views\TimeLineViews\TimeLineMarkerElementView.xaml.cs">
+      <DependentUpon>TimeLineMarkerElementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeLineViews\TimeLineMarkerView.xaml.cs">
+      <DependentUpon>TimeLineMarkerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeLineViews\TimeLineBaseView.xaml.cs">
+      <DependentUpon>TimeLineBaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeLineViews\TimeLineElementView.xaml.cs">
+      <DependentUpon>TimeLineElementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeLineViews\TimeLineView.xaml.cs">
+      <DependentUpon>TimeLineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Library.cs" />
-    <Compile Include="Views\MainWindowView.xaml.cs">
-      <DependentUpon>MainWindowView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\ShowParses.xaml">
+    <Page Include="Views\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLineMarkerElementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLineMarkerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLineBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLineElementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

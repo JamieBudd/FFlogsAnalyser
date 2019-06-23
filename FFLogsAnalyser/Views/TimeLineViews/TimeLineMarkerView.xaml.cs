@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 
 namespace FFLogsAnalyser.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindowView1.xaml
+    /// Interaction logic for TimeLineMarkerView.xaml
     /// </summary>
-    public partial class MainWindowView : UserControl
+    public partial class TimeLineMarkerView : UserControl
     {
-        public MainWindowView()
+        public TimeLineMarkerView()
         {
             InitializeComponent();
         }

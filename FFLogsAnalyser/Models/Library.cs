@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
+using FFLogsAnalyser.FFlogsClass;
 
 namespace FFLogsAnalyser
 {
@@ -20,7 +21,7 @@ namespace FFLogsAnalyser
         #region Get json data from fflogs API
 
         /// <summary>
-        /// generic function to get json data from fflogs API and put it into a class
+        /// generic async function to get json data from fflogs API and put it into a class
         /// </summary>
         /// <typeparam name="T">The class in which to put the json data</typeparam>
         /// <param name="url">the url of the json data</param>
@@ -96,6 +97,53 @@ namespace FFLogsAnalyser
             }
             //returns the url
             return "https://www.fflogs.com:443/v1/report/events/"+fightID+"?start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22" + "&" +APIKey;
+        }
+
+        #endregion
+
+        #region Get data from API
+
+        //private static List<ReportEvent> reportEvent = new List<ReportEvent>();
+        //public async  Task<List<ReportEvent>> GetBuffData(string reportID, string reportUrl, ReportFightID reportfightID, int fightID)
+        //{
+
+        //    reportfightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
+        //    foreach (Fight item in reportfightID.fights)
+        //    {
+        //        if (item.id == fightID)
+        //        {
+        //            int i = 0;
+        //            int start_time = item.start_time;
+        //            int end_time = item.end_time;
+
+        //            //get events from FFlogs API and put it in the buff class
+        //            string reportfighturl = Library.reportbuffs(reportID, start_time, end_time);
+        //            reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
+        //            try
+        //            {
+        //                while (reportEvent[i].nextPageTimestamp != 0)
+        //                {
+        //                    reportfighturl = Library.reportbuffs(reportID, reportEvent[i].nextPageTimestamp, end_time);
+        //                    reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
+        //                    i++;
+        //                }
+        //            }
+        //            catch (IndexOutOfRangeException)
+        //            {
+
+        //            }
+        //        }
+        //    }
+        //    return reportEvent;
+        //}
+
+        #endregion
+
+        #region Helper functions
+
+        public static double ConvertTime(double time)
+        {
+            return (time / 1000) * 2;
         }
 
         #endregion

@@ -10,17 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FFLogsAnalyser
+namespace FFLogsAnalyser.Views
 {
     /// <summary>
-    /// Interaction logic for ShowParses.xaml
+    /// Interaction logic for TimeLineMarkerElementView.xaml
     /// </summary>
-    public partial class ShowParses : Window
+    public partial class TimeLineMarkerElementView : UserControl
     {
-        public ShowParses()
+        public TimeLineMarkerElementView()
         {
+            InitializeComponent();
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FFLogsAnalyser
+namespace FFLogsAnalyser.ViewModels
 {
     /// <summary>
     /// Adds a Base ViewModel class to implement INotifyPropertyChanged as needed.
     /// </summary>
     [AddINotifyPropertyChangedInterface]
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged, IBaseViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
     }

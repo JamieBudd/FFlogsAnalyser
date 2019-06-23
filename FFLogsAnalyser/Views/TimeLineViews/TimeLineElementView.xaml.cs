@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FFLogsAnalyser.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindowView1.xaml
+    /// Interaction logic for TimeLineElementView.xaml
     /// </summary>
-    public partial class MainWindowView : UserControl
+    public partial class TimeLineElementView : UserControl
     {
-        public MainWindowView()
+        public TimeLineElementView()
         {
             InitializeComponent();
         }

@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FFLogsAnalyser.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindowView1.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class MainWindowView : UserControl
+    public partial class ShellView : Window
     {
-        public MainWindowView()
+        public ShellView()
         {
             InitializeComponent();
         }

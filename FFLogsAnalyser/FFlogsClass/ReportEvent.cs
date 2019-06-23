@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FFLogsAnalyser.FFlogsClass
 {
-    class ReportEvent
+    public class ReportEvent
     {
         public List<Event> events { get; set; }
         public int nextPageTimestamp { get; set; }
