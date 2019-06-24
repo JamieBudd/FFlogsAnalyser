@@ -8,7 +8,7 @@ namespace FFLogsAnalyser.Models
 {
     public class TimeLineBuff
     {
-        public string Name;
+        public string Name { get; set; }
         public List<Instance> instance = new List<Instance>();
 
         //public List<TargetID> target;

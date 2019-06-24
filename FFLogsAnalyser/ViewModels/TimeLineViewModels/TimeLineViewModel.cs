@@ -4,6 +4,7 @@ using FFLogsAnalyser.Models;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace FFLogsAnalyser.ViewModels
             StartTime = startTime;
             EndTime = endTime;
             TimeLineBuff = timeLineBuff;
+            Rect = new ObservableCollection<TimeLineDivider>();
+            
         }
 
         #region Private Members
@@ -43,6 +46,8 @@ namespace FFLogsAnalyser.ViewModels
         /// Ability Name
         /// </summary>
         public string Name { get; set; }
+        public ObservableCollection<TimeLineDivider> Rect { get; set; }
+        
 
         #endregion
 
@@ -63,22 +68,18 @@ namespace FFLogsAnalyser.ViewModels
             }
         }
 
+        public void AddMarkers()
+        {
+            double Minutes = Math.Floor(((TotalTime/2) / 60))+1;
+            for (double i = 1; i < Minutes; i++)
+            {
+                double StartTime = ((i * 60) * 2)-1;
+                TimeLineDivider tld = new TimeLineDivider();
+                tld.StartTime = StartTime;
+                Rect.Add(tld);
+            }
+        }
         #endregion
-
-
-
-
-        
-
-        
-
-
-
-
-
-
-
-        
 
     }
 }

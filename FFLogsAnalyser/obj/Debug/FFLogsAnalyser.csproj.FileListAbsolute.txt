@@ -28,8 +28,6 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\MainWi
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.csproj.Fody.CopyLocal.cache
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\ShellView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\ShellView.baml
-C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\MainWindowView2.g.cs
-C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\MainWindowView2.baml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineElementView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineElementView.baml
@@ -38,3 +36,5 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLi
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineBaseView.baml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.baml

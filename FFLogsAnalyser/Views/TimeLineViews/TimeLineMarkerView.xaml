@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FFLogsAnalyser.Views"
-             mc:Ignorable="d" Height="30" Width="auto">
+             mc:Ignorable="d" Height="25" Width="auto">
     
     <Canvas Width="{Binding TotalTime}">
         <ItemsControl x:Name="Items"
@@ -18,7 +18,7 @@
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Canvas.Left" Value="{Binding Path=StartTime}" />
-                    <Setter Property="Canvas.Top" Value="10" />
+                    <Setter Property="Canvas.Top" Value="0" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>

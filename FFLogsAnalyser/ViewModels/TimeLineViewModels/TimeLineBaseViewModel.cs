@@ -4,9 +4,11 @@ using FFLogsAnalyser.Models;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace FFLogsAnalyser.ViewModels
 {
@@ -19,10 +21,10 @@ namespace FFLogsAnalyser.ViewModels
 
         public TimeLineBaseViewModel(Rankings rankings)
         {
-            ActivateItem(tlmv);
             Ranking = rankings;
             TotalTime = 0;
-            
+            TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
+            Tlmv = new TimeLineMarkerViewModel();
         }
 
         #endregion
@@ -33,18 +35,19 @@ namespace FFLogsAnalyser.ViewModels
         private Rankings Ranking;
         private static List<ReportEvent> reportEvent = new List<ReportEvent>();
         private static ReportFightID reportfightID;
-        private List<TimeLineBuff> timeLineBuffs = new List<TimeLineBuff>();
+        
         private TimeLineViewModel tlv;
 
-        private TimeLineMarkerViewModel tlmv = new TimeLineMarkerViewModel();
+
         #endregion
 
         #region Public Members
 
+        public TimeLineMarkerViewModel Tlmv { get; set; }
+        public ObservableCollection<TimeLineBuff> TimeLineBuffs { get; set; }
         public int StartTime;
         public int EndTime;
         public double TotalTime;
-        
 
         #endregion
 
@@ -80,20 +83,28 @@ namespace FFLogsAnalyser.ViewModels
                             i++;
                         }
                     }
-                    catch (IndexOutOfRangeException)
-                    {
-
-                    }
+                    catch (IndexOutOfRangeException){}
                 }
             }
-
 
             foreach (var item in reportEvent.Last().events)
             {
                 if (item.type == "applybuff" || item.type == "applydebuff" || item.type == "removedebuff" || item.type == "removebuff")
                 {
+                    int index;
                     //finds the index if a buff is already added
-                    int index = timeLineBuffs.FindIndex(a => a.Name.Contains(item.ability.name));
+                    if (TimeLineBuffs.Any(a => a.Name == item.ability.name))
+                    {
+                        //If it does, get item
+                        var file = TimeLineBuffs.First(a => a.Name == item.ability.name);
+                        //grab its index
+                        index = TimeLineBuffs.IndexOf(file);
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
+                    //int index = TimeLineBuffs.FindIndex(a => a.Name.Contains(item.ability.name));
 
                     if (index == -1)
                     {
@@ -102,7 +113,7 @@ namespace FFLogsAnalyser.ViewModels
                         var instance = new TimeLineBuff.Instance();
 
                         timelinebuff.Name = item.ability.name;
-                        timeLineBuffs.Add(timelinebuff);
+                        TimeLineBuffs.Add(timelinebuff);
 
                         //If A buff is used prepull then set the start time to the fight start time and complete the instance
                         if ((item.type == "removebuff" && item.targetIsFriendly == true) || (item.type == "removedebuff" && item.targetIsFriendly == false))
@@ -117,38 +128,33 @@ namespace FFLogsAnalyser.ViewModels
                                 instance.StartTime = item.timestamp;                            
                         }
 
-                        timeLineBuffs.Last().instance.Add(instance);
+                        TimeLineBuffs.Last().instance.Add(instance);
                     }
                     else
                     {
                         //if the ability is already in the list then check to see if the last instance has a start and end time.
                         if ((item.type == "applybuff" && item.targetIsFriendly == true) || (item.type == "applydebuff" && item.targetIsFriendly == false))
                         {
-                            if (timeLineBuffs[index].instance.Last().complete == true)
+                            if (TimeLineBuffs[index].instance.Last().complete == true)
                             {
                                 //adds a new instance if the list already has an end time
                                 var instance = new TimeLineBuff.Instance();
                                 instance.StartTime = item.timestamp;
-                                timeLineBuffs[index].instance.Add(instance);
+                                TimeLineBuffs[index].instance.Add(instance);
                             }
                         }
 
                         //puts the instance EndTime equal to the timestamp then closes the instance
                         if ((item.type == "removebuff" && item.targetIsFriendly == true) || (item.type == "removedebuff" && item.targetIsFriendly == false))
                         {
-                            timeLineBuffs[index].instance.Last().EndTime = item.timestamp;
-                            timeLineBuffs[index].instance.Last().complete = true;
+                            TimeLineBuffs[index].instance.Last().EndTime = item.timestamp;
+                            TimeLineBuffs[index].instance.Last().complete = true;
                         }
                     }
-
-                }
-
-                
+                } 
             }
 
-            
-
-            foreach (var items in timeLineBuffs)
+            foreach (var items in TimeLineBuffs)
             {
                 //if a buff is still active when the fight ends, add the EndTime as the fight end time then close the instance
                 foreach (var instance in items.instance)
@@ -159,11 +165,15 @@ namespace FFLogsAnalyser.ViewModels
                         instance.complete = true;
                     }
                 }
+                Tlmv.AddElements(TotalTime);
+                //ActivateItem(Tlmv);
+
                 Items.Add(tlv = new TimeLineViewModel(items, StartTime, EndTime));
-                tlv.AddElement();
                 
-            }
-            
+                tlv.AddElement();
+                tlv.AddMarkers();
+
+            }            
         }
 
         #endregion

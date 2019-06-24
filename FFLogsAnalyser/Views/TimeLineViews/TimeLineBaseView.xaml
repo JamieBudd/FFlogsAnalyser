@@ -14,19 +14,44 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
+        <!--Row 0-->
         
+        <!--Adds the Time markers-->
+        <ContentControl x:Name="Tlmv" Grid.Row="0" Grid.Column="3"/>
+
         <!--Row 1-->
 
-        <ContentControl x:Name="TimeLineMarkerModel" Grid.Row="1" Grid.Column="3"/>
-
-        <!--Row 2-->
-        <ItemsControl x:Name="Items" Grid.Column="3" Grid.Row="2" cal:View.Model="TimeLineViewModel">
+        <ItemsControl x:Name="TimeLineBuffs" Grid.Column="0" Grid.Row="1"
+                      HorizontalAlignment="Left" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="AllowDrop" Value="True" />
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="50">
+                    <TextBlock Text="{Binding Name}" FontSize="14" Foreground="White"  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--Adds the TimeLine-->
+        <ItemsControl x:Name="Items" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Setter Property="AllowDrop" Value="True" />

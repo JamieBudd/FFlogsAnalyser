@@ -81,15 +81,16 @@
     <Compile Include="FFlogsClass\ReportEvent.cs" />
     <Compile Include="FFlogsClass\ReportFightID.cs" />
     <Compile Include="Models\TimeLineBuff.cs" />
+    <Compile Include="Models\TimeLineDivider.cs" />
     <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineBaseViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineElementViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineMarkerElementViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineMarkerViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLineBaseViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLineElementViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLineMarkerElementViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLineMarkerViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLineViewModel.cs" />
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
