@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\App.xaml
-7-1202117922
+9699434703
 
-331344549755
+37-287362098
 721209684996
-Views\MainWindowView.xaml;Views\ShellView.xaml;Views\TimeLineViews\TimeLineMarkerElementView.xaml;Views\TimeLineViews\TimeLineMarkerView.xaml;Views\TimeLineViews\TimeLineBaseView.xaml;Views\TimeLineViews\TimeLineElementView.xaml;Views\TimeLineViews\TimeLineView.xaml;
+Views\CharacterParseView.xaml;Views\MainWindowView.xaml;Views\ShellView.xaml;Views\TimeLineViews\TimeLineMarkerElementView.xaml;Views\TimeLineViews\TimeLineMarkerView.xaml;Views\TimeLineViews\TimeLineBaseView.xaml;Views\TimeLineViews\TimeLineElementView.xaml;Views\TimeLineViews\TimeLineView.xaml;Views\UrlParseView.xaml;
 
 False
 

@@ -82,6 +82,7 @@
     <Compile Include="FFlogsClass\ReportFightID.cs" />
     <Compile Include="Models\TimeLineBuff.cs" />
     <Compile Include="Models\TimeLineDivider.cs" />
+    <Compile Include="ViewModels\CharacterParseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\RelayCommand.cs" />
@@ -91,6 +92,10 @@
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineMarkerElementViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineMarkerViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineViewModel.cs" />
+    <Compile Include="ViewModels\UrlParseViewModel.cs" />
+    <Compile Include="Views\CharacterParseView.xaml.cs">
+      <DependentUpon>CharacterParseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
@@ -118,6 +123,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Library.cs" />
+    <Compile Include="Views\UrlParseView.xaml.cs">
+      <DependentUpon>UrlParseView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\CharacterParseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TimeLineViews\TimeLineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UrlParseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

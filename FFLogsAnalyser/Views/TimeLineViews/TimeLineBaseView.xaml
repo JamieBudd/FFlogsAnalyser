@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="auto"  SharedSizeGroup="A"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -24,7 +24,8 @@
         <ContentControl x:Name="TimeLineMarkers" Grid.Row="0" Grid.Column="3"/>
 
         <!--Row 1-->
-
+        
+        <!--Adds the Name of the buff next to the timeline-->
         <ItemsControl x:Name="TimeLineBuffs" Grid.Column="0" Grid.Row="1"
                       HorizontalAlignment="Left" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>

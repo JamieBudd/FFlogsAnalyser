@@ -38,3 +38,7 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLi
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerView.baml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\CharacterParseView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\UrlParseView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\CharacterParseView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\UrlParseView.baml
