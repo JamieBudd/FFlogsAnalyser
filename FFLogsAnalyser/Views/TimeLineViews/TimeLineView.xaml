@@ -45,7 +45,7 @@
                 </ItemsControl>
                 
                 <!--Setup the Buffs on the timeline-->
-                <ItemsControl x:Name="Items"
+                <ItemsControl x:Name="Elements"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top">
                     <ItemsControl.ItemsPanel>

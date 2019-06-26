@@ -5,26 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using System.Collections.ObjectModel;
 
 namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineMarkerViewModel : Conductor<object>.Collection.AllActive, IBaseViewModel
+    public class TimeLineMarkerViewModel : BaseViewModel
     {
 
         #region Constructor
 
         public TimeLineMarkerViewModel()
         {
-            
+            Markers = new ObservableCollection<TimeLineMarkerElementViewModel>();
         }
 
         #endregion
 
         #region Public Members
 
+        /// <summary>
+        /// The displayed time marker
+        /// </summary>
         public string Time { get; set; }
+
+        /// <summary>
+        /// List of objects that shows the time markers
+        /// </summary>
+        public ObservableCollection<TimeLineMarkerElementViewModel> Markers { get; set; }
 
         #endregion
 
@@ -37,12 +46,12 @@ namespace FFLogsAnalyser.ViewModels
         public void AddElements(double totalTime)
         {
             TotalTime = totalTime;
-            Items.Clear();
+            Markers.Clear();
             for(double i = 0; i< (Math.Floor((TotalTime/60000))+1) ; i++)
             {
                 double StartTime = (i * 60) * 2;
                 string Time = "0" + i + ":00";
-                Items.Add(new TimeLineMarkerElementViewModel(Time, StartTime));
+                Markers.Add(new TimeLineMarkerElementViewModel(Time, StartTime));
             }
         }
     }

@@ -11,17 +11,17 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"  SharedSizeGroup="A"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
+        
         <!--Row 0-->
         
         <!--Adds the Time markers-->
-        <ContentControl x:Name="Tlmv" Grid.Row="0" Grid.Column="3"/>
+        <ContentControl x:Name="TimeLineMarkers" Grid.Row="0" Grid.Column="3"/>
 
         <!--Row 1-->
 
@@ -48,7 +48,7 @@
         </ItemsControl>
 
         <!--Adds the TimeLine-->
-        <ItemsControl x:Name="Items" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
+        <ItemsControl x:Name="TimeLines" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">

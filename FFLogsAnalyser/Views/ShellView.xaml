@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FFLogsAnalyser.Views"
         mc:Ignorable="d" Background="Gray"
-        Title="FFlogs Analyser" Height="450" Width="800">
+        Title="FFlogs Analyser" Height="600" Width="1200">
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="12">
             <MenuItem Header="_File">

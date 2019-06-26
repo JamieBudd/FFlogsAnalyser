@@ -13,8 +13,10 @@ namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineViewModel : Conductor<object>.Collection.AllActive , IBaseViewModel
+    public class TimeLineViewModel : BaseViewModel
     {
+
+        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -24,9 +26,14 @@ namespace FFLogsAnalyser.ViewModels
             StartTime = startTime;
             EndTime = endTime;
             TimeLineBuff = timeLineBuff;
+
+            //Initialise the collections for the viewmodels
+            Elements = new ObservableCollection<TimeLineElementViewModel>();
             Rect = new ObservableCollection<TimeLineDivider>();
             
         }
+
+        #endregion
 
         #region Private Members
 
@@ -46,8 +53,16 @@ namespace FFLogsAnalyser.ViewModels
         /// Ability Name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// List of Lines to divide the timeline into sections
+        /// </summary>
         public ObservableCollection<TimeLineDivider> Rect { get; set; }
-        
+
+        /// <summary>
+        /// List of buffs to be shown on the timeline
+        /// </summary>
+        public ObservableCollection<TimeLineElementViewModel> Elements { get; set; }
 
         #endregion
 
@@ -64,10 +79,13 @@ namespace FFLogsAnalyser.ViewModels
             {
                 double BuffStartTime = Library.ConvertTime(item.StartTime - StartTime);
                 double BuffTime = Library.ConvertTime(item.EndTime - item.StartTime);
-                Items.Add(new TimeLineElementViewModel(BuffStartTime, BuffTime));
+                Elements.Add(new TimeLineElementViewModel(BuffStartTime, BuffTime));
             }
         }
 
+        /// <summary>
+        /// Adds the Lines which divide the timeline into minutes
+        /// </summary>
         public void AddMarkers()
         {
             double Minutes = Math.Floor(((TotalTime/2) / 60))+1;

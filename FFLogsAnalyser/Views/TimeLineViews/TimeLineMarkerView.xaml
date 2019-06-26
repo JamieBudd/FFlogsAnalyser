@@ -7,7 +7,7 @@
              mc:Ignorable="d" Height="25" Width="auto">
     
     <Canvas Width="{Binding TotalTime}">
-        <ItemsControl x:Name="Items"
+        <ItemsControl x:Name="Markers"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>

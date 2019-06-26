@@ -17,6 +17,8 @@ namespace FFLogsAnalyser.ViewModels
     public class TimeLineElementViewModel : BaseViewModel
     {
 
+        #region Constructor
+
         public TimeLineElementViewModel(double startTime, double buffTime)
         {
             //Colour = Brushes.Red;
@@ -24,8 +26,23 @@ namespace FFLogsAnalyser.ViewModels
             StartTime = startTime;
         }
 
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Start time of the element
+        /// </summary>
         public double StartTime { get; set; }
+
         //public Brush Colour { get; set; }
+
+        /// <summary>
+        /// Length of the element
+        /// </summary>
         public double BuffTime { get; set; }
+
+        #endregion
+
     }
 }

@@ -14,7 +14,7 @@ namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineBaseViewModel : Conductor<object>.Collection.AllActive, IBaseViewModel
+    public class TimeLineBaseViewModel : BaseViewModel
     {
 
         #region Default Constructor
@@ -23,8 +23,11 @@ namespace FFLogsAnalyser.ViewModels
         {
             Ranking = rankings;
             TotalTime = 0;
+
+            //Initialise the viewmodels
             TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
-            Tlmv = new TimeLineMarkerViewModel();
+            TimeLineMarkers = new TimeLineMarkerViewModel();
+            TimeLines = new ObservableCollection<TimeLineViewModel>();
         }
 
         #endregion
@@ -34,17 +37,28 @@ namespace FFLogsAnalyser.ViewModels
 
         private Rankings Ranking;
         private static List<ReportEvent> reportEvent = new List<ReportEvent>();
-        private static ReportFightID reportfightID;
-        
-        private TimeLineViewModel tlv;
-
+        private static ReportFightID reportFightID;        
+        private TimeLineViewModel timeLineView;
 
         #endregion
 
         #region Public Members
 
-        public TimeLineMarkerViewModel Tlmv { get; set; }
+        /// <summary>
+        /// List of Time Markers
+        /// </summary>
+        public TimeLineMarkerViewModel TimeLineMarkers { get; set; }
+
+        /// <summary>
+        /// List of TimeLineBuffs to display the name of the Buff
+        /// </summary>
         public ObservableCollection<TimeLineBuff> TimeLineBuffs { get; set; }
+
+        /// <summary>
+        /// List of TimeLineViewModels to show the TimeLine
+        /// </summary>
+        public ObservableCollection<TimeLineViewModel> TimeLines { get; set; }
+
         public int StartTime;
         public int EndTime;
         public double TotalTime;
@@ -60,8 +74,8 @@ namespace FFLogsAnalyser.ViewModels
             int fightID = int.Parse(Ranking.FightID.ToString());
             //List<ReportEvent> reportEvent = await Library.GetBuffData(reportID, reportUrl, reportfightID, fightID);
 
-            reportfightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
-            foreach (Fight item in reportfightID.fights)
+            reportFightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
+            foreach (Fight item in reportFightID.fights)
             {
                 if (item.id == Ranking.FightID)
                 {
@@ -165,13 +179,15 @@ namespace FFLogsAnalyser.ViewModels
                         instance.complete = true;
                     }
                 }
-                Tlmv.AddElements(TotalTime);
-                //ActivateItem(Tlmv);
+                TimeLineMarkers.AddElements(TotalTime);
 
-                Items.Add(tlv = new TimeLineViewModel(items, StartTime, EndTime));
+                //Adds the TimeLineViewModel to the collection
+                TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime));
+
+                //Adds the Elements and Markers to the TimeLineView
+                timeLineView.AddMarkers();
+                timeLineView.AddElement();
                 
-                tlv.AddElement();
-                tlv.AddMarkers();
 
             }            
         }

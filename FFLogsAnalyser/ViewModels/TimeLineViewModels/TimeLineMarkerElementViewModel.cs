@@ -9,7 +9,7 @@ namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    class TimeLineMarkerElementViewModel
+    public class TimeLineMarkerElementViewModel : BaseViewModel
     {
         #region Constructor
 
@@ -27,6 +27,10 @@ namespace FFLogsAnalyser.ViewModels
         /// Time displayed in an element
         /// </summary>
         public string Time { get; set; }
+
+        /// <summary>
+        /// StartTime of the element
+        /// </summary>
         public double StartTime { get; set; }
 
         #endregion
