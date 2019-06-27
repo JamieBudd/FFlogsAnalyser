@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="EventModels\AddParseEvent.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="FFlogsClass\Rankings.cs" />
     <Compile Include="FFlogsClass\ReportEvent.cs" />

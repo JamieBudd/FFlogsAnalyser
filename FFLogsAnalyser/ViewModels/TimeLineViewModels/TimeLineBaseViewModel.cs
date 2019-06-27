@@ -19,9 +19,10 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Default Constructor
 
-        public TimeLineBaseViewModel(Rankings rankings)
+        public TimeLineBaseViewModel()
         {
-            Ranking = rankings;
+            //Ranking = rankings;
+            //Rankings rankings
             TotalTime = 0;
 
             //Initialise the viewmodels
@@ -67,17 +68,14 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Commands
 
-        public async void AddCharacterParseTimeline()
+        public async void AddCharacterParseTimeline(int fightID, string reportID)
         {
-            string reportID = Ranking.ReportID;
             string reportUrl = Library.report(reportID);
-            int fightID = int.Parse(Ranking.FightID.ToString());
-            //List<ReportEvent> reportEvent = await Library.GetBuffData(reportID, reportUrl, reportfightID, fightID);
 
             reportFightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
             foreach (Fight item in reportFightID.fights)
             {
-                if (item.id == Ranking.FightID)
+                if (item.id == fightID)
                 {
                     int i = 0;
 

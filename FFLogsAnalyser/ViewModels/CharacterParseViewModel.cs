@@ -8,12 +8,13 @@ using System.Windows.Input;
 
 namespace FFLogsAnalyser.ViewModels
 {
-    public class CharacterParseViewModel : Screen, IBaseViewModel
+    public sealed class CharacterParseViewModel : Screen, IBaseViewModel
     {
         #region Constructor
 
-        public CharacterParseViewModel()
+        public CharacterParseViewModel(IEventAggregator events)
         {
+            _events = events;
             //Sets The tab header
             DisplayName = "Character Parses";
             //sets the default value of _regionselected and Enumsource
@@ -26,6 +27,7 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Private Members
 
+        private IEventAggregator _events;
         private string _serverselected;
         private string _regionselected;
         private string _firstname;
@@ -139,8 +141,10 @@ namespace FFLogsAnalyser.ViewModels
 
         public void ShowParse()
         {
-            //ActivateItem(tlbv = new TimeLineBaseViewModel(CharacterParses[this.SelectedParse]));
-           // tlbv.AddCharacterParseTimeline();
+            int fightID = int.Parse(CharacterParses[this.SelectedParse].FightID.ToString());
+            string reportID = CharacterParses[this.SelectedParse].ReportID;
+
+            _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
         }
 
         #endregion
