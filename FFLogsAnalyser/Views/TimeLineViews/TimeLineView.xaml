@@ -19,7 +19,7 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Height="50" Margin="22,0,0,0">
             <Canvas Width="{Binding TotalTime}">
                 <Canvas.Background>
-                    <SolidColorBrush Color="Purple" Opacity="0.2"/>
+                    <SolidColorBrush Color="{Binding TimeLineColour}" Opacity="0.5"/>
                 </Canvas.Background>
                 
                 <!--Setup the TimeLineDivider for each minute on the timeline-->

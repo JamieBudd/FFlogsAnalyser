@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace FFLogsAnalyser.ViewModels
 {
@@ -21,11 +22,12 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime)
+        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime, string colour)
         {
             StartTime = startTime;
             EndTime = endTime;
             TimeLineBuff = timeLineBuff;
+            TimeLineColour = colour;
 
             //Initialise the collections for the viewmodels
             Elements = new ObservableCollection<TimeLineElementViewModel>();
@@ -63,6 +65,8 @@ namespace FFLogsAnalyser.ViewModels
         /// List of buffs to be shown on the timeline
         /// </summary>
         public ObservableCollection<TimeLineElementViewModel> Elements { get; set; }
+
+        public string TimeLineColour { get; set; }
 
         #endregion
 

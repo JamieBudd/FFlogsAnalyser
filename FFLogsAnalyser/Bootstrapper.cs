@@ -24,10 +24,6 @@ namespace FFLogsAnalyser
             _container.Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>();
 
-            //_container.PerRequest<MainWindowViewModel>();
-            //_container.PerRequest<ShellViewModel>();
-            
-
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
                 .Where(type => type.Name.EndsWith("ViewModel"))

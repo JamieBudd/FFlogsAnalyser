@@ -130,5 +130,13 @@ namespace FFLogsAnalyser
         Vulnerability_Up
     }
 
+    public enum TimeLineColours
+    {
+        Pink,
+        Blue,
+        Green,
+        Yellow,
+        
+    }
     #endregion
 }

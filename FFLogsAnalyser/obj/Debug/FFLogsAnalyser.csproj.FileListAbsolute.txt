@@ -42,3 +42,8 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\Charac
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\UrlParseView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\CharacterParseView.baml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\UrlParseView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.pdb
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.baml

@@ -16,11 +16,11 @@ namespace FFLogsAnalyser.ViewModels
     {
         #region Default Constructor
 
-        public MainWindowViewModel(UrlParseViewModel urlParseViewModel, CharacterParseViewModel characterParseViewModel, IEventAggregator events)
+        public MainWindowViewModel(UrlParseViewModel urlParseViewModel, CharacterParseViewModel characterParseViewModel, IEventAggregator events, TimeLineBaseViewModel timeLineBaseViewModel)
         {
             UrlParseViewModel = urlParseViewModel;
             CharacterParseViewModel = characterParseViewModel;
-            TimeLineBaseViewModel = new TimeLineBaseViewModel();
+            TimeLineBaseViewModel = timeLineBaseViewModel;
             _events = events;
             _events.Subscribe(this);
             Setup();

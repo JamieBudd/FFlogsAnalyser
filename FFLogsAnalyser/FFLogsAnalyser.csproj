@@ -46,6 +46,9 @@
     <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.2.0.3\lib\net46\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -77,17 +80,22 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="EventModels\AddParseEvent.cs" />
+    <Compile Include="EventModels\TrackMouseOverTimeLineEvent.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="FFlogsClass\Rankings.cs" />
     <Compile Include="FFlogsClass\ReportEvent.cs" />
     <Compile Include="FFlogsClass\ReportFightID.cs" />
+    <Compile Include="Models\RoutedEventTrigger.cs" />
     <Compile Include="Models\TimeLineBuff.cs" />
     <Compile Include="Models\TimeLineDivider.cs" />
+    <Compile Include="HelperClasses\MouseBehaviour.cs" />
+    <Compile Include="HelperClasses\MultiplyConverter.cs" />
     <Compile Include="ViewModels\CharacterParseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\TimeLineViewModels\TimeLinePopupViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineBaseViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineElementViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineMarkerElementViewModel.cs" />
@@ -104,6 +112,9 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\TimeLineViews\TimeLinePopupView.xaml.cs">
+      <DependentUpon>TimeLinePopupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimeLineViews\TimeLineMarkerElementView.xaml.cs">
       <DependentUpon>TimeLineMarkerElementView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLineViews\TimeLinePopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

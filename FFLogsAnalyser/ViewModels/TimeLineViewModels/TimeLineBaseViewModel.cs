@@ -1,45 +1,58 @@
 ﻿using Caliburn.Micro;
 using FFLogsAnalyser.FFlogsClass;
 using FFLogsAnalyser.Models;
+using GongSolutions.Wpf.DragDrop;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineBaseViewModel : BaseViewModel
+    public class TimeLineBaseViewModel : BaseViewModel, IDropTarget
     {
 
         #region Default Constructor
 
-        public TimeLineBaseViewModel()
+        public TimeLineBaseViewModel(IEventAggregator events)
         {
-            //Ranking = rankings;
-            //Rankings rankings
+            //initialise the container
+            _events = events;
+
+            GetMousePosition = new RelayCommand(MouseMoveCommand);
             TotalTime = 0;
 
             //Initialise the viewmodels
-            TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
             TimeLineMarkers = new TimeLineMarkerViewModel();
             TimeLines = new ObservableCollection<TimeLineViewModel>();
+            TimeLineBuffsCollection = new ObservableCollection<TimeLineBuff>();
+            TimeLinePopupViewModel = new TimeLinePopupViewModel(_events);
+            _timeLineIndex = 0;
+
+            
         }
 
         #endregion
 
 
         #region Private Members
-
-        private Rankings Ranking;
+        private IEventAggregator _events;
+        private static int _timeLineIndex;
         private static List<ReportEvent> reportEvent = new List<ReportEvent>();
         private static ReportFightID reportFightID;        
         private TimeLineViewModel timeLineView;
+        public TimeLinePopupViewModel TimeLinePopupViewModel { get; set; }
 
         #endregion
 
@@ -50,10 +63,45 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public TimeLineMarkerViewModel TimeLineMarkers { get; set; }
 
-        /// <summary>
-        /// List of TimeLineBuffs to display the name of the Buff
-        /// </summary>
-        public ObservableCollection<TimeLineBuff> TimeLineBuffs { get; set; }
+        public ObservableCollection<TimeLineBuff> TimeLineBuffsCollection { get; set; }
+
+        
+
+        private double _timetooltip;
+
+        public double TimeToolTip
+        {
+            get { return _timetooltip; }
+            set {
+                _timetooltip = value; 
+                    value=PanelY+20;
+            }
+        }
+
+
+
+        private double _panelX;
+        private double _panelY;
+
+        public double PanelX
+        {
+            get { return _panelX; }
+            set
+            {
+                if (value.Equals(_panelX)) return;
+                _panelX = value;
+            }
+        }
+
+        public double PanelY
+        {
+            get { return _panelY; }
+            set
+            {
+                if (value.Equals(_panelY)) return;
+                _panelY = value;
+            }
+        }
 
         /// <summary>
         /// List of TimeLineViewModels to show the TimeLine
@@ -70,6 +118,10 @@ namespace FFLogsAnalyser.ViewModels
 
         public async void AddCharacterParseTimeline(int fightID, string reportID)
         {
+
+            //List of TimeLineBuffs to display the name of the Buff
+            ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
+
             string reportUrl = Library.report(reportID);
 
             reportFightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
@@ -177,19 +229,85 @@ namespace FFLogsAnalyser.ViewModels
                         instance.complete = true;
                     }
                 }
-                TimeLineMarkers.AddElements(TotalTime);
 
-                //Adds the TimeLineViewModel to the collection
-                TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime));
+                items.TimeLineGroupIndex = _timeLineIndex;
+
+                int index;
+                //finds the index if a timeline is already added
+                if (TimeLines.Any(a => a.Name == items.Name))
+                {
+                    //If it does, get item
+                    var file = TimeLines.First(a => a.Name == items.Name);
+                    //grab its index
+                    index = TimeLines.IndexOf(file);
+                }
+                else
+                {
+                    index = -1;
+                }
+
+                Enum colour = (TimeLineColours)_timeLineIndex;
+                items.Colour = colour.ToString();
+                if (index != -1)
+                {
+                    //if a timeline with the same name isn't in the collection add a new TimeLineViewModel to the end
+                    TimeLines.Insert(index, timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString()));
+                    TimeLineBuffsCollection.Insert(index, items);
+                }
+                else
+                {
+                    //if a timeline has the same name insert the TimeLineViewModel into the collection infront of the first instance
+                    TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString()));
+                    TimeLineBuffsCollection.Add(items);
+                }
 
                 //Adds the Elements and Markers to the TimeLineView
                 timeLineView.AddMarkers();
                 timeLineView.AddElement();
                 
+            }
 
-            }            
+            _timeLineIndex += 1;
+            //Adds the Time Markers or changes them to coincide with the longest battle time
+            TimeLineMarkers.AddElements(TotalTime);
+
+            
         }
 
+        /// <summary>
+        /// Drag method for moving items in the timeline
+        /// </summary>
+        /// <param name="dropInfo">the item that is being moved</param>
+        void IDropTarget.DragOver(IDropInfo dropInfo)
+        {
+            dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+            dropInfo.Effects = DragDropEffects.Move;
+        }
+
+        /// <summary>
+        /// Drop method for moving items in the timeline
+        /// </summary>
+        /// <param name="dropInfo">the item that is being moved</param>
+        void IDropTarget.Drop(IDropInfo dropInfo)
+        {
+            TimeLineViewModel droptimeline = (TimeLineViewModel)dropInfo.TargetItem;
+            TimeLineViewModel sourcetimeline = (TimeLineViewModel)dropInfo.Data;
+            int sourceindex = TimeLines.IndexOf(sourcetimeline);
+            int dropindex = TimeLines.IndexOf(droptimeline);
+
+            // Moves the TimeLineViewModel and the name of the buff to the dropped location
+            TimeLines.Move(sourceindex, dropindex);
+            TimeLineBuffsCollection.Move(sourceindex, dropindex);
+
+            
+        }
+
+        public ICommand GetMousePosition { get; set; }
+
+        public void MouseMoveCommand()
+        {
+            _events.PublishOnUIThread(new TrackMouseOverTimeLineEvent(PanelX, PanelY));
+        }
         #endregion
     }
 }

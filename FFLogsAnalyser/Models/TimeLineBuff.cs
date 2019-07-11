@@ -10,6 +10,8 @@ namespace FFLogsAnalyser.Models
     {
         public string Name { get; set; }
         public List<Instance> instance = new List<Instance>();
+        public int TimeLineGroupIndex { get; set; }
+        public string Colour { get; set; }
 
         //public List<TargetID> target;
 

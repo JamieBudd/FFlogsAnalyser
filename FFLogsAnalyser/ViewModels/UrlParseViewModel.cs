@@ -13,9 +13,10 @@ namespace FFLogsAnalyser.ViewModels
         public UrlParseViewModel(IEventAggregator events)
         {
             //Sets the tab header
-            DisplayName = "Url Parses";
+            DisplayName = "Add Url Parses";
             GetParse = new RelayCommand(ShowParse);
             _events = events;
+            IsErrorMessageVisible = false;
         }
 
         #region Private Members
@@ -28,7 +29,7 @@ namespace FFLogsAnalyser.ViewModels
 
         public ICommand GetParse { get; set; }
         public string Url { get; set; }
-        public string ErrorMessage { get; set; }
+        public bool IsErrorMessageVisible { get; set; }
 
         #endregion
 
@@ -36,15 +37,27 @@ namespace FFLogsAnalyser.ViewModels
 
         public void ShowParse()
         {
+            
             string searchfightID = "fight=";
             int searchfightIDindex = Url.IndexOf(searchfightID) + searchfightID.Length;
             string searchreportID = "reports/";
             int searchreportIDindex = Url.IndexOf(searchreportID) + searchreportID.Length;
-
-            int fightID = int.Parse(Url.Substring(searchfightIDindex, (Url.IndexOf('&') - searchfightIDindex)));
-            string reportID = Url.Substring(searchreportIDindex, (Url.IndexOf('#') - searchreportIDindex));
-
+            int fightID = 0;
+            string reportID = "";
+            try
+            {
+                fightID = int.Parse(Url.Substring(searchfightIDindex, (Url.IndexOf('&') - searchfightIDindex)));
+                reportID = Url.Substring(searchreportIDindex, (Url.IndexOf('#') - searchreportIDindex));
+            }
+            catch
+            {
+                IsErrorMessageVisible = true;
+            }
+            if (reportID != "")
+            {
+                IsErrorMessageVisible = false;
             _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
+            }
         }
 
         #endregion

@@ -4,9 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:FFLogsAnalyser.Views"
+             xmlns:root="clr-namespace:FFLogsAnalyser"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <root:MultiplyConverter x:Key="MultiplyConverter"/>
+        <sys:Double x:Key="Factor">-.5</sys:Double>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -21,16 +31,25 @@
         <!--Row 0-->
         
         <!--Adds the Time markers-->
-        <ContentControl x:Name="TimeLineMarkers" Grid.Row="0" Grid.Column="3"/>
+        <ContentControl x:Name="TimeLineMarkers"
+                        Grid.Row="0"
+                        Grid.Column="3"                
+                        IsHitTestVisible="False">
+        </ContentControl>
 
-        <!--Row 1-->
+
+            <!--Row 1-->
         
         <!--Adds the Name of the buff next to the timeline-->
-        <ItemsControl x:Name="TimeLineBuffs" Grid.Column="0" Grid.Row="1"
-                      HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ItemsControl x:Name="TimeLineBuffsCollection"
+                      Grid.Column="0"
+                      Grid.Row="1"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical"
+                                VerticalAlignment="Center">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Setter Property="AllowDrop" Value="True" />
@@ -42,26 +61,118 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="50">
-                    <TextBlock Text="{Binding Name}" FontSize="14" Foreground="White"  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Name}"
+                               Foreground="{Binding Colour}"
+                               FontSize="14"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
+        
+        <!--<Popup x:Name="TimeLinePopup"
+               IsHitTestVisible="False"
+               AllowsTransparency="True"
+               PlacementTarget="{Binding ElementName=TimeLines}"
+               
+               StaysOpen="True"
+               Opacity="0.5"
+               VerticalOffset="0"
+               HorizontalOffset="{Binding PanelX}"
+               Placement="Relative"
+               Grid.Column="3"
+               Grid.Row="1">
+               
+
+            <Grid Height="{Binding ElementName=TimeLines, Path=ActualHeight}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding PanelY}"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="{Binding PanelX}"
+                           Grid.Column="1"
+                           Grid.Row="2"
+                           Background="Transparent"
+                           Foreground="White"
+                           Opacity="0.5"
+                           HorizontalAlignment="{Binding TimeToolTip}"/>
+                
+                <Rectangle Height="{Binding ElementName=TimeLines, Path=ActualHeight}"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.RowSpan="2"
+                           Width="2"
+                           Fill="Black"                       
+                           Opacity="0.2"
+                           HorizontalAlignment="Left"/>
+            </Grid>
+        </Popup>-->
+
+        <ContentControl x:Name="TimeLinePopupViewModel"                       
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        IsHitTestVisible="False"
+                        Focusable="False"
+                        Panel.ZIndex="99"
+                        Height="{Binding ElementName=TimeLines, Path=ActualHeight}">
+            <ContentControl.RenderTransform>
+                <TranslateTransform X="{Binding PanelX}"/>
+            </ContentControl.RenderTransform>
+        </ContentControl>    
+        
         <!--Adds the TimeLine-->
-        <ItemsControl x:Name="TimeLines" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
+        <ItemsControl x:Name="TimeLines"
+                      
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.DropHandler="{Binding}"
+                      Grid.Column="2"
+                      Grid.Row="1"
+                      VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
+                                                 MouseY="{Binding PanelY, Mode=OneWayToSource}"/>
+            </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseMove" >
+                    <i:InvokeCommandAction Command="{Binding GetMousePosition}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="AllowDrop" Value="True" />
-                            </Style>
-                        </StackPanel.Resources>
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Left"
+                                IsHitTestVisible="True">
+                                
+                        
                     </StackPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+            
     </Grid>
+
+    <!--<ItemsControl.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <BooleanAnimationUsingKeyFrames 
+                                 Storyboard.TargetName="TimeLinePopup" 
+                                 Storyboard.TargetProperty="IsOpen">
+                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                        </BooleanAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </ItemsControl.Triggers>-->
 
 </UserControl>
