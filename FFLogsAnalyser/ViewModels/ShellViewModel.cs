@@ -10,11 +10,23 @@ namespace FFLogsAnalyser.ViewModels
 {
     public class ShellViewModel : Conductor<object>
     {
-        private MainWindowViewModel _mainwindowVM;
+        #region Constructor
+
         public ShellViewModel(MainWindowViewModel mainWindowVM)
         {
             _mainwindowVM = mainWindowVM;
             ActivateItem(mainWindowVM);
         }
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// The ViewModel for the Program
+        /// </summary>
+        private MainWindowViewModel _mainwindowVM;
+
+        #endregion
     }
 }

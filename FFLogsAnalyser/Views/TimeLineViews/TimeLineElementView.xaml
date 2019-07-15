@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:FFLogsAnalyser.Views"
              mc:Ignorable="d" 
              d:DesignHeight="30"  d:DesignWidth="220">
+    
+    <!--Rectangle which displays a buff to be placed in the timeline-->
     <Rectangle Fill="Red"
                HorizontalAlignment="Left"
                Height="30" Stroke="Black"

@@ -32,19 +32,14 @@ namespace FFLogsAnalyser
 
         private void AssociatedObjectOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
         {
-
                 var pos = mouseEventArgs.GetPosition(AssociatedObject);
                 MouseX = pos.X;
-                MouseY = pos.Y;
-            
-            
+                MouseY = pos.Y;          
         }
 
         protected override void OnDetaching()
-        {
-            
+        {           
                 AssociatedObject.MouseMove -= AssociatedObjectOnMouseMove;
-            
         }
     }
 }

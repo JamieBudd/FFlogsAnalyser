@@ -12,11 +12,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <root:MultiplyConverter x:Key="MultiplyConverter"/>
-        <sys:Double x:Key="Factor">-.5</sys:Double>
-    </UserControl.Resources>
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -34,7 +29,8 @@
         <ContentControl x:Name="TimeLineMarkers"
                         Grid.Row="0"
                         Grid.Column="3"                
-                        IsHitTestVisible="False">
+                        IsHitTestVisible="False"
+                        SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal">
         </ContentControl>
 
 
@@ -45,7 +41,8 @@
                       Grid.Column="0"
                       Grid.Row="1"
                       HorizontalAlignment="Left"
-                      VerticalAlignment="Top">
+                      VerticalAlignment="Top"
+                      SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"
@@ -71,50 +68,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        
-        <!--<Popup x:Name="TimeLinePopup"
-               IsHitTestVisible="False"
-               AllowsTransparency="True"
-               PlacementTarget="{Binding ElementName=TimeLines}"
-               
-               StaysOpen="True"
-               Opacity="0.5"
-               VerticalOffset="0"
-               HorizontalOffset="{Binding PanelX}"
-               Placement="Relative"
-               Grid.Column="3"
-               Grid.Row="1">
-               
-
-            <Grid Height="{Binding ElementName=TimeLines, Path=ActualHeight}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{Binding PanelY}"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Text="{Binding PanelX}"
-                           Grid.Column="1"
-                           Grid.Row="2"
-                           Background="Transparent"
-                           Foreground="White"
-                           Opacity="0.5"
-                           HorizontalAlignment="{Binding TimeToolTip}"/>
-                
-                <Rectangle Height="{Binding ElementName=TimeLines, Path=ActualHeight}"
-                           Grid.Column="0"
-                           Grid.Row="0"
-                           Grid.RowSpan="2"
-                           Width="2"
-                           Fill="Black"                       
-                           Opacity="0.2"
-                           HorizontalAlignment="Left"/>
-            </Grid>
-        </Popup>-->
-
+        <!-- Adds the TimeLine PopUp to show the time on mouseover-->
         <ContentControl x:Name="TimeLinePopupViewModel"                       
                         Grid.Row="1"
                         Grid.Column="3"
@@ -128,8 +82,7 @@
         </ContentControl>    
         
         <!--Adds the TimeLine-->
-        <ItemsControl x:Name="TimeLines"
-                      
+        <ItemsControl x:Name="TimeLines"                      
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"
@@ -138,7 +91,7 @@
                       VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
-                                                 MouseY="{Binding PanelY, Mode=OneWayToSource}"/>
+                                     MouseY="{Binding PanelY, Mode=OneWayToSource}"/>
             </i:Interaction.Behaviors>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseMove" >
@@ -149,10 +102,7 @@
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Left"
-                                IsHitTestVisible="True">
-                                
-                        
-                    </StackPanel>
+                                IsHitTestVisible="True"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

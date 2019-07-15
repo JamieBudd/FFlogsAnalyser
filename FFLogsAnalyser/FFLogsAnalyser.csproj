@@ -89,11 +89,11 @@
     <Compile Include="Models\TimeLineBuff.cs" />
     <Compile Include="Models\TimeLineDivider.cs" />
     <Compile Include="HelperClasses\MouseBehaviour.cs" />
-    <Compile Include="HelperClasses\MultiplyConverter.cs" />
     <Compile Include="ViewModels\CharacterParseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\RemoveFightsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLinePopupViewModel.cs" />
     <Compile Include="ViewModels\TimeLineViewModels\TimeLineBaseViewModel.cs" />
@@ -107,6 +107,9 @@
     </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemoveFightsView.xaml.cs">
+      <DependentUpon>RemoveFightsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -143,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemoveFightsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

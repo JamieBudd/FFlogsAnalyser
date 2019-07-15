@@ -141,9 +141,14 @@ namespace FFLogsAnalyser
 
         #region Helper functions
 
+        /// <summary>
+        /// Converts the time from the API into seconds
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static double ConvertTime(double time)
         {
-            return (time / 1000) * 2;
+            return (time / 1000);
         }
 
         #endregion

@@ -37,8 +37,14 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Public Members
 
+        /// <summary>
+        /// Command to send the parse data to the timeline
+        /// </summary>
         public ICommand GetParse { get; set; }
 
+        /// <summary>
+        /// index of the parse which has been selected
+        /// </summary>
         public int SelectedParse { get; set; }
 
         /// <summary>
@@ -137,8 +143,9 @@ namespace FFLogsAnalyser.ViewModels
             }
         }
 
-        
-
+        /// <summary>
+        /// Gets the fight data and sends it to the timeline
+        /// </summary>
         public void ShowParse()
         {
             int fightID = int.Parse(CharacterParses[this.SelectedParse].FightID.ToString());

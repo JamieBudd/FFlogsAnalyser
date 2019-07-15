@@ -117,7 +117,7 @@ namespace FFLogsAnalyser
     #region Buff names
 
     /// <summary>
-    /// List of buff names (for use in the Buff timeline)
+    /// List of buff names (for use in the Buff timeline) where '_' = ' '
     /// </summary>
     public enum Buffs
     {
@@ -130,6 +130,13 @@ namespace FFLogsAnalyser
         Vulnerability_Up
     }
 
+    #endregion
+
+    #region Timeline Colours
+
+    /// <summary>
+    /// List of colours to identify the different parses in the timeline
+    /// </summary>
     public enum TimeLineColours
     {
         Pink,

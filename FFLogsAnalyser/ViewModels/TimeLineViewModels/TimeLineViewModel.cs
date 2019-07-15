@@ -39,8 +39,19 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Private Members
 
+        /// <summary>
+        /// The start time of the fight
+        /// </summary>
         private int StartTime;
+
+        /// <summary>
+        /// The end time of the fight
+        /// </summary>
         private int EndTime;
+
+        /// <summary>
+        /// Class which holds data for the timeline
+        /// </summary>
         private TimeLineBuff TimeLineBuff;
 
         #endregion
@@ -78,11 +89,11 @@ namespace FFLogsAnalyser.ViewModels
         public void AddElement()
         {            
             Name = TimeLineBuff.Name;
-            TotalTime = Library.ConvertTime(EndTime - StartTime);
+            TotalTime = Library.ConvertTime(EndTime - StartTime)*2;
             foreach (var item in TimeLineBuff.instance)
             {
-                double BuffStartTime = Library.ConvertTime(item.StartTime - StartTime);
-                double BuffTime = Library.ConvertTime(item.EndTime - item.StartTime);
+                double BuffStartTime = Library.ConvertTime(item.StartTime - StartTime)*2;
+                double BuffTime = Library.ConvertTime(item.EndTime - item.StartTime)*2;
                 Elements.Add(new TimeLineElementViewModel(BuffStartTime, BuffTime));
             }
         }

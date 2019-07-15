@@ -47,3 +47,5 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\GongSolution
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.xml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.baml

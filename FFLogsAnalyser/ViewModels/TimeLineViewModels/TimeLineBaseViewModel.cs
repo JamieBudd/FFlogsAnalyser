@@ -45,8 +45,8 @@ namespace FFLogsAnalyser.ViewModels
 
         #endregion
 
-
         #region Private Members
+
         private IEventAggregator _events;
         private static int _timeLineIndex;
         private static List<ReportEvent> reportEvent = new List<ReportEvent>();
@@ -67,16 +67,7 @@ namespace FFLogsAnalyser.ViewModels
 
         
 
-        private double _timetooltip;
 
-        public double TimeToolTip
-        {
-            get { return _timetooltip; }
-            set {
-                _timetooltip = value; 
-                    value=PanelY+20;
-            }
-        }
 
 
 
@@ -180,14 +171,14 @@ namespace FFLogsAnalyser.ViewModels
                         TimeLineBuffs.Add(timelinebuff);
 
                         //If A buff is used prepull then set the start time to the fight start time and complete the instance
-                        if ((item.type == "removebuff" && item.targetIsFriendly == true) || (item.type == "removedebuff" && item.targetIsFriendly == false))
+                        if ((item.type == "removebuff" && item.targetIsFriendly == true && item.ability.name != "Vulnerability Up") || (item.type == "removedebuff" && item.targetIsFriendly == false))
                         {
                                 instance.StartTime = StartTime;
                                 instance.EndTime = item.timestamp;
                                 instance.complete = true;
                         }
 
-                            if ((item.type == "applybuff" && item.targetIsFriendly == true) || (item.type == "applydebuff" && item.targetIsFriendly == false))
+                            if ((item.type == "applybuff" && item.targetIsFriendly == true && item.ability.name != "Vulnerability Up") || (item.type == "applydebuff" && item.targetIsFriendly == false))
                         { 
                                 instance.StartTime = item.timestamp;                            
                         }
