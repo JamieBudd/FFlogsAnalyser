@@ -13,36 +13,53 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+
+
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!--Row 0-->
-        
+
+
         <!--Adds the Time markers-->
-        <ContentControl x:Name="TimeLineMarkers"
-                        Grid.Row="0"
-                        Grid.Column="3"                
-                        IsHitTestVisible="False"
-                        SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal">
-        </ContentControl>
+        <ScrollViewer Name="TopHeader"
+                      Grid.Row="0"
+                      Grid.Column="3"
+                      CanContentScroll="True"
+                      HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Hidden"
+                      IsHitTestVisible="False"
+                      Focusable="False">
+            
+            <ContentControl x:Name="TimeLineMarkers"                                      
+                            IsHitTestVisible="False"
+                            HorizontalAlignment="Left">
+            </ContentControl>
+        </ScrollViewer>
 
+        <!--Row 1-->
 
-            <!--Row 1-->
-        
         <!--Adds the Name of the buff next to the timeline-->
-        <ItemsControl x:Name="TimeLineBuffsCollection"
+        <ScrollViewer Name="LeftHeader"
                       Grid.Column="0"
                       Grid.Row="1"
+                      HorizontalScrollBarVisibility="Hidden"
+                      Focusable="False"
+                      IsHitTestVisible="False"
+                      VerticalScrollBarVisibility="Hidden"
+                      CanContentScroll="True">
+            
+        <ItemsControl x:Name="TimeLineBuffsCollection"                      
                       HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+                      VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"
@@ -57,7 +74,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="50">
+                    <Grid Height="30">
                         <TextBlock Text="{Binding Name}"
                                Foreground="{Binding Colour}"
                                FontSize="14"
@@ -67,7 +84,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
+        </ScrollViewer>
+        
         <!-- Adds the TimeLine PopUp to show the time on mouseover-->
         <ContentControl x:Name="TimeLinePopupViewModel"                       
                         Grid.Row="1"
@@ -79,15 +97,20 @@
             <ContentControl.RenderTransform>
                 <TranslateTransform X="{Binding PanelX}"/>
             </ContentControl.RenderTransform>
-        </ContentControl>    
-        
+        </ContentControl>
+
         <!--Adds the TimeLine-->
-        <ItemsControl x:Name="TimeLines"                      
+        <ScrollViewer Name="TimeLineScroll"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Visible"
+                      ScrollChanged="TimeLineScroll_ScrollChanged"
+                      Grid.Column="2"
+                      Grid.Row="1">
+        <ItemsControl x:Name="TimeLines"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"
-                      Grid.Column="2"
-                      Grid.Row="1"
+                      
                       VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
@@ -106,10 +129,10 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-            
-    </Grid>
+        </ScrollViewer>
 
-    <!--<ItemsControl.Triggers>
+
+        <!--<ItemsControl.Triggers>
         <EventTrigger RoutedEvent="MouseEnter">
             <EventTrigger.Actions>
                 <BeginStoryboard>
@@ -125,4 +148,5 @@
         </EventTrigger>
     </ItemsControl.Triggers>-->
 
+    </Grid>
 </UserControl>

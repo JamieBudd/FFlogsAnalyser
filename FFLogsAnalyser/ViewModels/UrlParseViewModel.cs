@@ -80,7 +80,7 @@ namespace FFLogsAnalyser.ViewModels
             {
                 //if the data is found hide the error message and send the data to the timeline
                 IsErrorMessageVisible = false;
-            _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
+                _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
             }
         }
 

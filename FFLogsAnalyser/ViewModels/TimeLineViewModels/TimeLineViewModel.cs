@@ -22,12 +22,13 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime, string colour)
+        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime, string colour, double totaltime)
         {
             StartTime = startTime;
             EndTime = endTime;
             TimeLineBuff = timeLineBuff;
             TimeLineColour = colour;
+            TotalTime = Library.ConvertTime(totaltime);
 
             //Initialise the collections for the viewmodels
             Elements = new ObservableCollection<TimeLineElementViewModel>();
@@ -103,7 +104,7 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public void AddMarkers()
         {
-            double Minutes = Math.Floor(((TotalTime/2) / 60))+1;
+            double Minutes = Math.Floor((TotalTime / 60))+1;
             for (double i = 1; i < Minutes; i++)
             {
                 double StartTime = ((i * 60) * 2)-1;

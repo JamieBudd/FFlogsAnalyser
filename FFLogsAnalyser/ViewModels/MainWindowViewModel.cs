@@ -16,12 +16,17 @@ namespace FFLogsAnalyser.ViewModels
     {
         #region Default Constructor
 
-        public MainWindowViewModel(UrlParseViewModel urlParseViewModel, CharacterParseViewModel characterParseViewModel, IEventAggregator events, TimeLineBaseViewModel timeLineBaseViewModel)
+        public MainWindowViewModel(RemoveFightsViewModel removeFightsViewModel,
+                                   UrlParseViewModel urlParseViewModel,
+                                   CharacterParseViewModel characterParseViewModel,
+                                   IEventAggregator events,
+                                   TimeLineBaseViewModel timeLineBaseViewModel)
         {
             //initialise the ViewModels
             UrlParseViewModel = urlParseViewModel;
             CharacterParseViewModel = characterParseViewModel;
             TimeLineBaseViewModel = timeLineBaseViewModel;
+            RemoveFightsViewModel = removeFightsViewModel;
 
             //listen for hadlers
             _events = events;
@@ -39,6 +44,11 @@ namespace FFLogsAnalyser.ViewModels
         /// The event aggregator to receive messages
         /// </summary>
         private IEventAggregator _events;
+
+        /// <summary>
+        /// The View for removing a timeline
+        /// </summary>
+        private RemoveFightsViewModel RemoveFightsViewModel;
 
         /// <summary>
         /// The View for adding a url parse
@@ -70,6 +80,7 @@ namespace FFLogsAnalyser.ViewModels
         {
             Items.Add(UrlParseViewModel);
             Items.Add(CharacterParseViewModel);
+            Items.Add(RemoveFightsViewModel);
 
         }
 

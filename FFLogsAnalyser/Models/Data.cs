@@ -143,7 +143,7 @@ namespace FFLogsAnalyser
         Blue,
         Green,
         Yellow,
-        
+        Purple
     }
     #endregion
 }

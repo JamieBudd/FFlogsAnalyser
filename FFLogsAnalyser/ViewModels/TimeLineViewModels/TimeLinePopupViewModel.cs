@@ -12,8 +12,11 @@ namespace FFLogsAnalyser.ViewModels
 
     public class TimeLinePopupViewModel: BaseViewModel, IHandle<TrackMouseOverTimeLineEvent>
     {
+        #region Constructor
+
         public TimeLinePopupViewModel(IEventAggregator events)
         {
+            //Set up the event aggregator to recieve messages
             _events = events;
             _events.Subscribe(this);
         }
@@ -22,23 +25,53 @@ namespace FFLogsAnalyser.ViewModels
         {
         }
 
+        #endregion
 
+        #region Private Members
+        /// <summary>
+        /// The event handler
+        /// </summary>
+        private IEventAggregator _events;
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// The Y position of the mouse
+        /// </summary>
+        public double Y { get; set; }
+
+        /// <summary>
+        /// The X position of the mouse
+        /// </summary>
+        public double X { get; set; }
+
+        /// <summary>
+        /// The mouse position converted to minutes
+        /// </summary>
         public double minute { get; set; }
-        public double second { get; set; }
-        private string _xtooltip;
 
+        /// <summary>
+        /// The mouse position converted to seconds
+        /// </summary>
+        public double second { get; set; }
+
+        /// <summary>
+        /// Displays the time where the mouse is on the timeline
+        /// </summary>
         public string XToolTip
         {
             get { return $"{minute} : {second.ToString("00")}"; }
-            set { _xtooltip = value; }
         }
 
+        #endregion
 
-        private IEventAggregator _events;
-
-        public double Y { get; set; }
-        public double X { get; set; }
-
+        #region Commands
+        /// <summary>
+        /// The handle to track the mouse position on the timeline
+        /// </summary>
+        /// <param name="message">contains the X and Y point of the mouse within the timeline</param>
         public void Handle(TrackMouseOverTimeLineEvent message)
         {
             this.X = message.X;
@@ -46,5 +79,7 @@ namespace FFLogsAnalyser.ViewModels
             this.minute = Math.Floor((X - 22) / 118);
             this.second = Math.Round(((X - 22) % 118)/2);
         }
+
+        #endregion
     }
 }

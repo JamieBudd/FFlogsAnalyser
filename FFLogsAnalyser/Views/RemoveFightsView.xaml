@@ -7,6 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <ListView x:Name="TimeLineFights"
+                  Background="Transparent"
+                  SelectionMode="Single">
             
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Fights}"
+                                   Foreground="Black"
+                                   Background="{Binding Colour}"/>
+                        <CheckBox IsChecked="{Binding IsEnabled}"/>
+                        <Button Content="X"
+                                Command="{Binding ElementName=TimeLineFights, Path=DataContext.DeleteFight}"
+                                CommandParameter="{Binding}"
+                                Tag="{Binding SelectedFight}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

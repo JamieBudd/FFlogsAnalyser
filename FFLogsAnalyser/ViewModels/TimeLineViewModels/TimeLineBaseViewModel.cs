@@ -20,7 +20,7 @@ namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineBaseViewModel : BaseViewModel, IDropTarget
+    public class TimeLineBaseViewModel : BaseViewModel, IDropTarget, IHandle<DeleteTimeLineEvent>
     {
 
         #region Default Constructor
@@ -29,6 +29,7 @@ namespace FFLogsAnalyser.ViewModels
         {
             //initialise the container
             _events = events;
+            _events.Subscribe(this);
 
             GetMousePosition = new RelayCommand(MouseMoveCommand);
             TotalTime = 0;
@@ -113,6 +114,9 @@ namespace FFLogsAnalyser.ViewModels
             //List of TimeLineBuffs to display the name of the Buff
             ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
 
+            int colourpicker = _timeLineIndex % 5;
+
+            Enum colour = (TimeLineColours)colourpicker;
             string reportUrl = Library.report(reportID);
 
             reportFightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
@@ -237,18 +241,18 @@ namespace FFLogsAnalyser.ViewModels
                     index = -1;
                 }
 
-                Enum colour = (TimeLineColours)_timeLineIndex;
+                
                 items.Colour = colour.ToString();
                 if (index != -1)
                 {
                     //if a timeline with the same name isn't in the collection add a new TimeLineViewModel to the end
-                    TimeLines.Insert(index, timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString()));
+                    TimeLines.Insert(index, timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString(), TotalTime));
                     TimeLineBuffsCollection.Insert(index, items);
                 }
                 else
                 {
                     //if a timeline has the same name insert the TimeLineViewModel into the collection infront of the first instance
-                    TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString()));
+                    TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString(), TotalTime));
                     TimeLineBuffsCollection.Add(items);
                 }
 
@@ -257,11 +261,14 @@ namespace FFLogsAnalyser.ViewModels
                 timeLineView.AddElement();
                 
             }
+            //sends the timeline data to the removefight tab
+            _events.PublishOnUIThread(new AddTimeLineEvent(reportID, _timeLineIndex, colour.ToString()));
 
             _timeLineIndex += 1;
             //Adds the Time Markers or changes them to coincide with the longest battle time
             TimeLineMarkers.AddElements(TotalTime);
 
+            
             
         }
 
@@ -298,6 +305,21 @@ namespace FFLogsAnalyser.ViewModels
         public void MouseMoveCommand()
         {
             _events.PublishOnUIThread(new TrackMouseOverTimeLineEvent(PanelX, PanelY));
+        }
+
+        public void Handle(DeleteTimeLineEvent message)
+        {
+
+            for(int i = TimeLineBuffsCollection.Count-1; i>=0; i--)
+            {
+                if (TimeLineBuffsCollection[i].TimeLineGroupIndex == message.FightID)
+                {
+                    TimeLineBuffsCollection.RemoveAt(i);
+                    TimeLines.RemoveAt(i);
+                    
+                }
+            }
+            
         }
         #endregion
     }

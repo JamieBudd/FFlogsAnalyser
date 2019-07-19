@@ -6,11 +6,31 @@ namespace FFLogsAnalyser.ViewModels
 {
     public class RelayCommand : ICommand
     {
+        #region Constructor
+
+        public RelayCommand(Action<object> action)
+        {
+            mActionwithparam = action;
+        }
+
+        public RelayCommand(Action action)
+        {
+            mAction = action;
+        }
+
+        #endregion
+
         #region Private members
         /// <summary>
         /// the action to run
         /// </summary>
         private Action mAction;
+
+        /// <summary>
+        /// The action to run if it includes a parameter
+        /// </summary>
+        readonly Action<object> mActionwithparam;
+
         #endregion
 
         #region Public members
@@ -32,15 +52,6 @@ namespace FFLogsAnalyser.ViewModels
 
         #endregion
 
-        #region Constructor
-
-        public RelayCommand(Action action)
-        {
-            mAction = action;
-        }
-
-        #endregion
-
         #region Methods
         /// <summary>
         /// runs the action passed in
@@ -48,7 +59,14 @@ namespace FFLogsAnalyser.ViewModels
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            mAction();
+            if (parameter == null)
+            {
+                mAction();
+            }
+            else
+            {
+                mActionwithparam(parameter);
+            }
         }
 
         #endregion

@@ -80,6 +80,8 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="EventModels\AddParseEvent.cs" />
+    <Compile Include="EventModels\AddTimeLineEvent.cs" />
+    <Compile Include="EventModels\DeleteTimeLineEvent.cs" />
     <Compile Include="EventModels\TrackMouseOverTimeLineEvent.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="FFlogsClass\Rankings.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Models\TimeLineBuff.cs" />
     <Compile Include="Models\TimeLineDivider.cs" />
     <Compile Include="HelperClasses\MouseBehaviour.cs" />
+    <Compile Include="Models\TimeLineFights.cs" />
     <Compile Include="ViewModels\CharacterParseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\HelperModels\IBaseViewModel.cs" />
