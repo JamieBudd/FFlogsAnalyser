@@ -39,9 +39,7 @@ namespace FFLogsAnalyser.ViewModels
             TimeLines = new ObservableCollection<TimeLineViewModel>();
             TimeLineBuffsCollection = new ObservableCollection<TimeLineBuff>();
             TimeLinePopupViewModel = new TimeLinePopupViewModel(_events);
-            _timeLineIndex = 0;
-
-            
+            _timeLineIndex = 0;            
         }
 
         #endregion
@@ -65,12 +63,6 @@ namespace FFLogsAnalyser.ViewModels
         public TimeLineMarkerViewModel TimeLineMarkers { get; set; }
 
         public ObservableCollection<TimeLineBuff> TimeLineBuffsCollection { get; set; }
-
-        
-
-
-
-
 
         private double _panelX;
         private double _panelY;
@@ -114,9 +106,13 @@ namespace FFLogsAnalyser.ViewModels
             //List of TimeLineBuffs to display the name of the Buff
             ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
 
-            int colourpicker = _timeLineIndex % 5;
+            //index which loops through the available timeline colours
+            int colourpicker = _timeLineIndex % Enum.GetNames(typeof(TimeLineColours)).Length;
 
+            //picks the colour based on the group index of the timeline
             Enum colour = (TimeLineColours)colourpicker;
+
+            //gets the url
             string reportUrl = Library.report(reportID);
 
             reportFightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
@@ -148,7 +144,10 @@ namespace FFLogsAnalyser.ViewModels
 
             foreach (var item in reportEvent.Last().events)
             {
-                if (item.type == "applybuff" || item.type == "applydebuff" || item.type == "removedebuff" || item.type == "removebuff")
+                if ((item.type == "applybuff" && item.targetIsFriendly == true) ||
+                    (item.type == "applydebuff" && item.targetIsFriendly == false) ||
+                    (item.type == "removedebuff" && item.targetIsFriendly == false) ||
+                    (item.type == "removebuff" && item.targetIsFriendly == true))
                 {
                     int index;
                     //finds the index if a buff is already added
@@ -163,7 +162,6 @@ namespace FFLogsAnalyser.ViewModels
                     {
                         index = -1;
                     }
-                    //int index = TimeLineBuffs.FindIndex(a => a.Name.Contains(item.ability.name));
 
                     if (index == -1)
                     {
@@ -175,14 +173,14 @@ namespace FFLogsAnalyser.ViewModels
                         TimeLineBuffs.Add(timelinebuff);
 
                         //If A buff is used prepull then set the start time to the fight start time and complete the instance
-                        if ((item.type == "removebuff" && item.targetIsFriendly == true && item.ability.name != "Vulnerability Up") || (item.type == "removedebuff" && item.targetIsFriendly == false))
+                        if (item.type == "removebuff" || item.type == "removedebuff")
                         {
                                 instance.StartTime = StartTime;
                                 instance.EndTime = item.timestamp;
                                 instance.complete = true;
                         }
 
-                            if ((item.type == "applybuff" && item.targetIsFriendly == true && item.ability.name != "Vulnerability Up") || (item.type == "applydebuff" && item.targetIsFriendly == false))
+                            if (item.type == "applybuff" || item.type == "applydebuff")
                         { 
                                 instance.StartTime = item.timestamp;                            
                         }
@@ -192,7 +190,7 @@ namespace FFLogsAnalyser.ViewModels
                     else
                     {
                         //if the ability is already in the list then check to see if the last instance has a start and end time.
-                        if ((item.type == "applybuff" && item.targetIsFriendly == true) || (item.type == "applydebuff" && item.targetIsFriendly == false))
+                        if (item.type == "applybuff" || item.type == "applydebuff")
                         {
                             if (TimeLineBuffs[index].instance.Last().complete == true)
                             {
@@ -204,7 +202,7 @@ namespace FFLogsAnalyser.ViewModels
                         }
 
                         //puts the instance EndTime equal to the timestamp then closes the instance
-                        if ((item.type == "removebuff" && item.targetIsFriendly == true) || (item.type == "removedebuff" && item.targetIsFriendly == false))
+                        if (item.type == "removebuff" || item.type == "removedebuff")
                         {
                             TimeLineBuffs[index].instance.Last().EndTime = item.timestamp;
                             TimeLineBuffs[index].instance.Last().complete = true;
@@ -215,6 +213,9 @@ namespace FFLogsAnalyser.ViewModels
 
             foreach (var items in TimeLineBuffs)
             {
+                //sets the group index of the timeline
+                items.TimeLineGroupIndex = _timeLineIndex;
+
                 //if a buff is still active when the fight ends, add the EndTime as the fight end time then close the instance
                 foreach (var instance in items.instance)
                 {
@@ -224,8 +225,6 @@ namespace FFLogsAnalyser.ViewModels
                         instance.complete = true;
                     }
                 }
-
-                items.TimeLineGroupIndex = _timeLineIndex;
 
                 int index;
                 //finds the index if a timeline is already added
@@ -240,9 +239,10 @@ namespace FFLogsAnalyser.ViewModels
                 {
                     index = -1;
                 }
-
                 
+                //sets the colour of the timeline
                 items.Colour = colour.ToString();
+
                 if (index != -1)
                 {
                     //if a timeline with the same name isn't in the collection add a new TimeLineViewModel to the end
@@ -266,10 +266,7 @@ namespace FFLogsAnalyser.ViewModels
 
             _timeLineIndex += 1;
             //Adds the Time Markers or changes them to coincide with the longest battle time
-            TimeLineMarkers.AddElements(TotalTime);
-
-            
-            
+            TimeLineMarkers.AddElements(TotalTime);            
         }
 
         /// <summary>
@@ -295,32 +292,42 @@ namespace FFLogsAnalyser.ViewModels
 
             // Moves the TimeLineViewModel and the name of the buff to the dropped location
             TimeLines.Move(sourceindex, dropindex);
-            TimeLineBuffsCollection.Move(sourceindex, dropindex);
-
-            
+            TimeLineBuffsCollection.Move(sourceindex, dropindex);            
         }
 
+        /// <summary>
+        /// Command to get the mouse position over the timeline
+        /// </summary>
         public ICommand GetMousePosition { get; set; }
 
+        /// <summary>
+        /// The command used when the mouse goes over the Timeline
+        /// </summary>
         public void MouseMoveCommand()
         {
+            //sends the mouse position to the TimeLinePopupView
             _events.PublishOnUIThread(new TrackMouseOverTimeLineEvent(PanelX, PanelY));
         }
 
+        /// <summary>
+        /// A handle to receive information for which timeline has been deleted
+        /// </summary>
+        /// <param name="message">Contains data for a timeline parse</param>
         public void Handle(DeleteTimeLineEvent message)
         {
-
+            //cycles backwards through the timelines
             for(int i = TimeLineBuffsCollection.Count-1; i>=0; i--)
             {
+                //checks to see if a timelineview is part of a group
                 if (TimeLineBuffsCollection[i].TimeLineGroupIndex == message.FightID)
                 {
+                    //deletes the timeline group
                     TimeLineBuffsCollection.RemoveAt(i);
-                    TimeLines.RemoveAt(i);
-                    
+                    TimeLines.RemoveAt(i);                    
                 }
-            }
-            
+            }            
         }
+
         #endregion
     }
 }

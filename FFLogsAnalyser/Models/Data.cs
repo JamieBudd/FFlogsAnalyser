@@ -132,6 +132,21 @@ namespace FFLogsAnalyser
 
     #endregion
 
+    #region Buff Colours
+
+    public enum BuffColours
+    {
+        LightBlue,
+        Orange,
+        Purple,
+        Teal,
+        DarkBlue,
+        Red,
+        DarkOrange,
+    }
+
+    #endregion
+
     #region Timeline Colours
 
     /// <summary>
