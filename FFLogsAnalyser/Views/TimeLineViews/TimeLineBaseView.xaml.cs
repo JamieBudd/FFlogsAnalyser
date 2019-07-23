@@ -25,12 +25,5 @@ namespace FFLogsAnalyser.Views
         {
             InitializeComponent();
         }
-
-        private void TimeLineScroll_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            TopHeader.ScrollToHorizontalOffset(e.HorizontalOffset);
-            LeftHeader.ScrollToVerticalOffset(e.VerticalOffset);
-
-        }
     }
 }

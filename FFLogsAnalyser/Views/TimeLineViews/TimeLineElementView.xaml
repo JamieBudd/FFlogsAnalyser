@@ -8,7 +8,7 @@
              d:DesignHeight="24"  d:DesignWidth="220">
     
     <!--Rectangle which displays a buff to be placed in the timeline-->
-    <Rectangle Fill="Red"
+    <Rectangle Fill="{Binding ElementColour}"
                HorizontalAlignment="Left"
                Height="24" Stroke="Black"
                VerticalAlignment="Top"

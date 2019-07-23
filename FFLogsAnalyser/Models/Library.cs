@@ -67,7 +67,7 @@ namespace FFLogsAnalyser
  
         public static string report(string fightID)
         { 
-            return "https://www.fflogs.com:443/v1/report/fights/" + fightID + "?" + APIKey;
+            return "https://www.fflogs.com:443/v1/report/fights/" + fightID + "?translate=true&" + APIKey;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace FFLogsAnalyser
                 }                
             }
             //returns the url
-            return "https://www.fflogs.com:443/v1/report/events/"+fightID+"?start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22" + "&" +APIKey;
+            return "https://www.fflogs.com:443/v1/report/events/"+fightID+"?translate=true&start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22" + "&" + APIKey;
         }
 
         #endregion

@@ -39,7 +39,7 @@ namespace FFLogsAnalyser.ViewModels
             TimeLines = new ObservableCollection<TimeLineViewModel>();
             TimeLineBuffsCollection = new ObservableCollection<TimeLineBuff>();
             TimeLinePopupViewModel = new TimeLinePopupViewModel(_events);
-            _timeLineIndex = 0;            
+            _timeLineIndex = 0;
         }
 
         #endregion
@@ -62,6 +62,10 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public TimeLineMarkerViewModel TimeLineMarkers { get; set; }
 
+        //List of TimeLineBuffs which holds the timeLine data for each buff
+        public ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
+
+        //list of TimeLineBuffs which shows the name of the buff
         public ObservableCollection<TimeLineBuff> TimeLineBuffsCollection { get; set; }
 
         private double _panelX;
@@ -96,22 +100,111 @@ namespace FFLogsAnalyser.ViewModels
         public int EndTime;
         public double TotalTime;
 
+        /// <summary>
+        /// Gets the colour of the current TimeLine
+        /// </summary>
+        public string TimeLineColour
+        {
+            get
+            {
+                //index which loops through the available timeline colours
+                int colourpicker = _timeLineIndex % Enum.GetNames(typeof(TimeLineColours)).Length;
+
+                //picks the colour based on the group index of the timeline
+                Enum colour = (TimeLineColours)colourpicker;
+
+                //updates the colour
+                return colour.ToString();
+            }
+        }
+
         #endregion
 
         #region Commands
 
-        public async void AddCharacterParseTimeline(int fightID, string reportID)
+        public async Task AddCharacterParseTimeline(int fightID, string reportID)
         {
+            //clears the previous TimeLine buffs
+            TimeLineBuffs.Clear();
 
-            //List of TimeLineBuffs to display the name of the Buff
-            ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
+            //gets the events from fflogsAPI
+            await GetBuffData(fightID, reportID);
 
-            //index which loops through the available timeline colours
-            int colourpicker = _timeLineIndex % Enum.GetNames(typeof(TimeLineColours)).Length;
+            //adds the events to the TimeLineBuffs list
+            AddEventsToTimeLineBuffs();
 
-            //picks the colour based on the group index of the timeline
-            Enum colour = (TimeLineColours)colourpicker;
+            //Adds the timeline to the view
+            SetupTimeLine();
+           
+            //sends the timeline data to the removefight tab
+            _events.PublishOnUIThread(new AddTimeLineEvent(reportID, _timeLineIndex, TimeLineColour));
 
+            //inreases the timelineindex which refers to the next timeline parse
+            _timeLineIndex += 1;
+            
+            //Adds the Time Markers or changes them to coincide with the longest battle time
+            TimeLineMarkers.AddElements(TotalTime);
+        }
+
+        /// <summary>
+        /// Completes and sets up the timeline view
+        /// </summary>
+        public void SetupTimeLine()
+        {
+            foreach (var items in TimeLineBuffs)
+            {
+                //sets the group index of the timeline
+                items.TimeLineGroupIndex = _timeLineIndex;
+
+                //if a buff is still active when the fight ends, add the EndTime as the fight end time then close the instance
+                foreach (var instance in items.instance)
+                {
+                    if (!instance.complete)
+                    {
+                        instance.EndTime = EndTime;
+                        instance.complete = true;
+                    }
+                }
+
+                int index;
+                //finds the index if a timeline is already added
+                if (TimeLines.Any(a => a.Name == items.Name))
+                {
+                    //If it does, get item
+                    var tl = TimeLines.First(a => a.Name == items.Name);
+                    //grab its index
+                    index = TimeLines.IndexOf(tl);
+                }
+                else
+                {
+                    index = -1;
+                }
+
+                //sets the colour of the timeline
+                items.Colour = TimeLineColour;
+
+                if (index != -1)
+                {
+                    //if a timeline with the same name isn't in the collection add a new TimeLineViewModel to the end
+                    TimeLines.Insert(index, timeLineView = new TimeLineViewModel(items, StartTime, EndTime, TotalTime));
+                    TimeLineBuffsCollection.Insert(index, items);
+                }
+                else
+                {
+                    //if a timeline has the same name insert the TimeLineViewModel into the collection infront of the first instance
+                    TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime, TotalTime));
+                    TimeLineBuffsCollection.Add(items);
+                }
+
+                //Adds the Elements and Markers to the TimeLineView
+                timeLineView.AddMarkers();
+                timeLineView.AddElement();
+
+            }
+        }
+
+        public async Task GetBuffData(int fightID, string reportID)
+        {
             //gets the url
             string reportUrl = Library.report(reportID);
 
@@ -126,7 +219,7 @@ namespace FFLogsAnalyser.ViewModels
                     EndTime = item.end_time;
                     TotalTime = Math.Max(TotalTime, (EndTime - StartTime));
 
-                    //get events from FFlogs API and put it in the buff class
+                    //get events from FFlogs API and put it into the buff class
                     string reportfighturl = Library.reportbuffs(reportID, StartTime, EndTime);
                     reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
                     try
@@ -138,10 +231,13 @@ namespace FFLogsAnalyser.ViewModels
                             i++;
                         }
                     }
-                    catch (IndexOutOfRangeException){}
+                    catch (IndexOutOfRangeException) { }
                 }
             }
+        }
 
+        public void AddEventsToTimeLineBuffs()
+        {
             foreach (var item in reportEvent.Last().events)
             {
                 if ((item.type == "applybuff" && item.targetIsFriendly == true) ||
@@ -153,7 +249,7 @@ namespace FFLogsAnalyser.ViewModels
                     //finds the index if a buff is already added
                     if (TimeLineBuffs.Any(a => a.Name == item.ability.name))
                     {
-                        //If it does, get item
+                        //If it finds it, get the item
                         var file = TimeLineBuffs.First(a => a.Name == item.ability.name);
                         //grab its index
                         index = TimeLineBuffs.IndexOf(file);
@@ -175,14 +271,14 @@ namespace FFLogsAnalyser.ViewModels
                         //If A buff is used prepull then set the start time to the fight start time and complete the instance
                         if (item.type == "removebuff" || item.type == "removedebuff")
                         {
-                                instance.StartTime = StartTime;
-                                instance.EndTime = item.timestamp;
-                                instance.complete = true;
+                            instance.StartTime = StartTime;
+                            instance.EndTime = item.timestamp;
+                            instance.complete = true;
                         }
 
-                            if (item.type == "applybuff" || item.type == "applydebuff")
-                        { 
-                                instance.StartTime = item.timestamp;                            
+                        if (item.type == "applybuff" || item.type == "applydebuff")
+                        {
+                            instance.StartTime = item.timestamp;
                         }
 
                         TimeLineBuffs.Last().instance.Add(instance);
@@ -208,65 +304,8 @@ namespace FFLogsAnalyser.ViewModels
                             TimeLineBuffs[index].instance.Last().complete = true;
                         }
                     }
-                } 
+                }
             }
-
-            foreach (var items in TimeLineBuffs)
-            {
-                //sets the group index of the timeline
-                items.TimeLineGroupIndex = _timeLineIndex;
-
-                //if a buff is still active when the fight ends, add the EndTime as the fight end time then close the instance
-                foreach (var instance in items.instance)
-                {
-                    if (!instance.complete)
-                    {
-                        instance.EndTime = EndTime;
-                        instance.complete = true;
-                    }
-                }
-
-                int index;
-                //finds the index if a timeline is already added
-                if (TimeLines.Any(a => a.Name == items.Name))
-                {
-                    //If it does, get item
-                    var file = TimeLines.First(a => a.Name == items.Name);
-                    //grab its index
-                    index = TimeLines.IndexOf(file);
-                }
-                else
-                {
-                    index = -1;
-                }
-                
-                //sets the colour of the timeline
-                items.Colour = colour.ToString();
-
-                if (index != -1)
-                {
-                    //if a timeline with the same name isn't in the collection add a new TimeLineViewModel to the end
-                    TimeLines.Insert(index, timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString(), TotalTime));
-                    TimeLineBuffsCollection.Insert(index, items);
-                }
-                else
-                {
-                    //if a timeline has the same name insert the TimeLineViewModel into the collection infront of the first instance
-                    TimeLines.Add(timeLineView = new TimeLineViewModel(items, StartTime, EndTime, colour.ToString(), TotalTime));
-                    TimeLineBuffsCollection.Add(items);
-                }
-
-                //Adds the Elements and Markers to the TimeLineView
-                timeLineView.AddMarkers();
-                timeLineView.AddElement();
-                
-            }
-            //sends the timeline data to the removefight tab
-            _events.PublishOnUIThread(new AddTimeLineEvent(reportID, _timeLineIndex, colour.ToString()));
-
-            _timeLineIndex += 1;
-            //Adds the Time Markers or changes them to coincide with the longest battle time
-            TimeLineMarkers.AddElements(TotalTime);            
         }
 
         /// <summary>
@@ -292,7 +331,7 @@ namespace FFLogsAnalyser.ViewModels
 
             // Moves the TimeLineViewModel and the name of the buff to the dropped location
             TimeLines.Move(sourceindex, dropindex);
-            TimeLineBuffsCollection.Move(sourceindex, dropindex);            
+            TimeLineBuffsCollection.Move(sourceindex, dropindex);
         }
 
         /// <summary>
@@ -310,7 +349,7 @@ namespace FFLogsAnalyser.ViewModels
         }
 
         /// <summary>
-        /// A handle to receive information for which timeline has been deleted
+        /// A handle to receive information for when a timeline has been deleted
         /// </summary>
         /// <param name="message">Contains data for a timeline parse</param>
         public void Handle(DeleteTimeLineEvent message)

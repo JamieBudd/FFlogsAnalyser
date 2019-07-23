@@ -12,14 +12,18 @@ namespace FFLogsAnalyser.Models
         public List<Instance> instance = new List<Instance>();
         public int TimeLineGroupIndex { get; set; }
         public string Colour { get; set; }
+        public string BuffColour
+        {
+            get
+            {
+                string BuffName = Name.Replace(' ', '_');
+                int BuffNumber = (int)Enum.Parse(typeof(Buffs), BuffName);
+                Enum Colour = (BuffColours)BuffNumber;
+                return Colour.ToString();
+            }
+        }
 
-        //public List<TargetID> target;
-
-        //public class TargetID
-        //{
-        //    public int ID;
-        //    public List<Instance> instance;
-        //}
+        
 
         public class Instance
         {

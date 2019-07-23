@@ -21,6 +21,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -28,34 +29,19 @@
 
 
         <!--Adds the Time markers-->
-        <ScrollViewer Name="TopHeader"
-                      Grid.Row="0"
-                      Grid.Column="3"
-                      CanContentScroll="True"
-                      HorizontalScrollBarVisibility="Hidden"
-                      VerticalScrollBarVisibility="Hidden"
-                      IsHitTestVisible="False"
-                      Focusable="False">
-            
-            <ContentControl x:Name="TimeLineMarkers"                                      
-                            IsHitTestVisible="False"
-                            HorizontalAlignment="Left">
-            </ContentControl>
-        </ScrollViewer>
+        <ContentControl x:Name="TimeLineMarkers"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        IsHitTestVisible="False"
+                        HorizontalAlignment="Left">
+        </ContentControl>
 
         <!--Row 1-->
 
         <!--Adds the Name of the buff next to the timeline-->
-        <ScrollViewer Name="LeftHeader"
+        <ItemsControl x:Name="TimeLineBuffsCollection"
                       Grid.Column="0"
                       Grid.Row="1"
-                      HorizontalScrollBarVisibility="Hidden"
-                      Focusable="False"
-                      IsHitTestVisible="False"
-                      VerticalScrollBarVisibility="Hidden"
-                      CanContentScroll="True">
-            
-        <ItemsControl x:Name="TimeLineBuffsCollection"                      
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
@@ -74,7 +60,7 @@
                 <DataTemplate>
                     <Grid Height="30">
                         <TextBlock Text="{Binding Name}"
-                               Foreground="{Binding Colour}"
+                               Foreground="{Binding BuffColour}"
                                FontSize="14"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Center"/>
@@ -82,12 +68,11 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        </ScrollViewer>
-        
+
         <!-- Adds the TimeLine PopUp to show the time on mouseover-->
         <ContentControl x:Name="TimeLinePopupViewModel"                       
                         Grid.Row="1"
-                        Grid.Column="3"
+                        Grid.Column="2"
                         IsHitTestVisible="False"
                         Focusable="False"
                         Panel.ZIndex="99"
@@ -98,17 +83,12 @@
         </ContentControl>
 
         <!--Adds the TimeLine-->
-        <ScrollViewer Name="TimeLineScroll"
-                      VerticalScrollBarVisibility="Visible"
-                      HorizontalScrollBarVisibility="Visible"
-                      ScrollChanged="TimeLineScroll_ScrollChanged"
-                      Grid.Column="2"
-                      Grid.Row="1">
         <ItemsControl x:Name="TimeLines"
+                      Grid.Column="2"
+                      Grid.Row="1"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
-                      
+                      dd:DragDrop.DropHandler="{Binding}"                      
                       VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
@@ -127,7 +107,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        </ScrollViewer>
 
 
         <!--<ItemsControl.Triggers>

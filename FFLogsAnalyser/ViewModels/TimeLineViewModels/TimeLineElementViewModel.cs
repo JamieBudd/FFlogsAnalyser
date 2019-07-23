@@ -19,11 +19,15 @@ namespace FFLogsAnalyser.ViewModels
 
         #region Constructor
 
-        public TimeLineElementViewModel(double startTime, double buffTime)
+        public TimeLineElementViewModel(double startTime, double buffTime, int buffnumber)
         {
-            //Colour = Brushes.Red;
+            //set up the variables from the constructor
             BuffTime = buffTime;
             StartTime = startTime;
+
+            //gets and sets the buff colour
+            Enum colour = (BuffColours)buffnumber;
+            ElementColour = colour.ToString();
         }
 
         #endregion
@@ -35,7 +39,10 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public double StartTime { get; set; }
 
-        //public Brush Colour { get; set; }
+        /// <summary>
+        /// Colour of the element
+        /// </summary>
+        public string ElementColour { get; set; }
 
         /// <summary>
         /// Length of the element

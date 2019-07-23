@@ -22,12 +22,11 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime, string colour, double totaltime)
+        public TimeLineViewModel(TimeLineBuff timeLineBuff, int startTime, int endTime, double totaltime)
         {
             StartTime = startTime;
             EndTime = endTime;
-            TimeLineBuff = timeLineBuff;
-            TimeLineColour = colour;
+            TimeLineBuffs = timeLineBuff;
             TotalTime = Library.ConvertTime(totaltime);
 
             //Initialise the collections for the viewmodels
@@ -53,7 +52,7 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Class which holds data for the timeline
         /// </summary>
-        private TimeLineBuff TimeLineBuff;
+        private TimeLineBuff TimeLineBuffs;
 
         #endregion
 
@@ -78,8 +77,13 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public ObservableCollection<TimeLineElementViewModel> Elements { get; set; }
 
-        public string TimeLineColour { get; set; }
-
+        public string TimeLineColour
+        {
+            get
+            {
+                return TimeLineBuffs.Colour;
+            }
+        }
         #endregion
 
         #region Commands
@@ -89,13 +93,15 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public void AddElement()
         {            
-            Name = TimeLineBuff.Name;
+            //Name = TimeLineBuff.Name;
+            string BuffName = TimeLineBuffs.Name.Replace(' ', '_');
             TotalTime = Library.ConvertTime(EndTime - StartTime)*2;
-            foreach (var item in TimeLineBuff.instance)
+            foreach (var item in TimeLineBuffs.instance)
             {
+                int BuffNumber = (int)Enum.Parse(typeof(Buffs), BuffName);
                 double BuffStartTime = Library.ConvertTime(item.StartTime - StartTime)*2;
                 double BuffTime = Library.ConvertTime(item.EndTime - item.StartTime)*2;
-                Elements.Add(new TimeLineElementViewModel(BuffStartTime, BuffTime));
+                Elements.Add(new TimeLineElementViewModel(BuffStartTime, BuffTime, BuffNumber));
             }
         }
 
