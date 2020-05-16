@@ -21,14 +21,20 @@ namespace FFLogsAnalyser.ViewModels
 
         public TimeLineElementViewModel(double startTime, double buffTime, int buffnumber)
         {
-            //set up the variables from the constructor
+            //set up the variables
             BuffTime = buffTime;
             StartTime = startTime;
-
-            //gets and sets the buff colour
-            Enum colour = (BuffColours)buffnumber;
-            ElementColour = colour.ToString();
+            Buffnumber = buffnumber;
         }
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Index of the buff contained in Buff Enum
+        /// </summary>
+        private int Buffnumber;
 
         #endregion
 
@@ -42,7 +48,14 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Colour of the element
         /// </summary>
-        public string ElementColour { get; set; }
+        public string ElementColour
+        {
+            get
+            {
+                Enum colour = (BuffColours)Buffnumber;
+                return colour.ToString();
+            }
+        }
 
         /// <summary>
         /// Length of the element

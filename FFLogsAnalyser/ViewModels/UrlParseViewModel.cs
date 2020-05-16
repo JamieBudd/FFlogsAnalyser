@@ -82,6 +82,7 @@ namespace FFLogsAnalyser.ViewModels
                 IsErrorMessageVisible = false;
                 _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
             }
+            Url = "";
         }
 
         #endregion

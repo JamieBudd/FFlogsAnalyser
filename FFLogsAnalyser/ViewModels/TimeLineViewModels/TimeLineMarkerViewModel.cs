@@ -49,8 +49,8 @@ namespace FFLogsAnalyser.ViewModels
             Markers.Clear();
             for(double i = 0; i< (Math.Floor((TotalTime/60000))+1) ; i++)
             {
-                double StartTime = ((i * 59) * 2)+1;
-                string Time = "0" + i + ":00";
+                double StartTime = (i * 60 * 2);
+                string Time = i.ToString("00")+":00";
                 Markers.Add(new TimeLineMarkerElementViewModel(Time, StartTime));
             }
         }

@@ -62,7 +62,7 @@ namespace FFLogsAnalyser.ViewModels
         /// </summary>
         public string XToolTip
         {
-            get { return $"{minute} : {second.ToString("00")}"; }
+            get { return $"{minute} : {second.ToString("00.0")}"; }
         }
 
         #endregion
@@ -76,8 +76,8 @@ namespace FFLogsAnalyser.ViewModels
         {
             this.X = message.X;
             this.Y = message.Y-10;
-            this.minute = Math.Floor((X - 22) / 118);
-            this.second = Math.Round(((X - 22) % 118)/2);
+            this.minute = Math.Floor(X / 120);
+            this.second = Math.Floor(X % 120)/2;
         }
 
         #endregion

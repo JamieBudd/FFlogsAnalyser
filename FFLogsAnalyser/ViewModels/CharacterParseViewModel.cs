@@ -146,12 +146,10 @@ namespace FFLogsAnalyser.ViewModels
         /// <summary>
         /// Gets the fight data and sends it to the timeline
         /// </summary>
-        public void ShowParse()
+        public void ShowParse(object param)
         {
-            int fightID = int.Parse(CharacterParses[this.SelectedParse].FightID.ToString());
-            string reportID = CharacterParses[this.SelectedParse].ReportID;
-
-            _events.PublishOnUIThread(new AddParseEvent(fightID, reportID));
+            Rankings tempparam = (Rankings)param;
+            _events.PublishOnUIThread(new AddParseEvent(int.Parse(tempparam.FightID.ToString()), tempparam.ReportID));
         }
 
         #endregion

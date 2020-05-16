@@ -16,9 +16,10 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Fights}"
                                    Foreground="Black"
-                                   Background="{Binding Colour}"/>
-                        <CheckBox IsChecked="{Binding IsEnabled}"/>
-                        <Button Content="X"
+                                   Background="{Binding Colour}"
+                                   Margin="0,0,10,0"/>
+                        <!--<CheckBox IsChecked="{Binding IsEnabled}"/>-->
+                        <Button Content=" X "
                                 Command="{Binding ElementName=TimeLineFights, Path=DataContext.DeleteFight}"
                                 CommandParameter="{Binding}"
                                 Tag="{Binding SelectedFight}"/>

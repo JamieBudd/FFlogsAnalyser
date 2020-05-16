@@ -11,104 +11,120 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <Border Margin="-1,-1,-1,-1" BorderThickness="1">
 
-    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True">
+        <DockPanel>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <!--Adds the Time markers-->
+            <Grid DockPanel.Dock="Top">
 
-        <!--Row 0-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding ElementName=BuffNames, Path=ActualWidth}"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-        <!--Adds the Time markers-->
-        <ContentControl x:Name="TimeLineMarkers"
-                        Grid.Column="2"
+                <Rectangle Fill="Transparent" Height="auto" Width="auto" Grid.Row="0" Grid.Column="0"/>
+
+                    <ContentControl x:Name="TimeLineMarkers"
+                        Grid.Column="1"
                         Grid.Row="0"
                         IsHitTestVisible="False"
-                        HorizontalAlignment="Left">
-        </ContentControl>
+                        HorizontalAlignment="Left"
+                        Padding="-21,0,0,0">
+                    </ContentControl>
+                </Grid>
 
-        <!--Row 1-->
+                <Grid x:Name="BuffNames">
 
-        <!--Adds the Name of the buff next to the timeline-->
-        <ItemsControl x:Name="TimeLineBuffsCollection"
+                    <!--Adds the Name of the buff next to the timeline-->
+                    <ItemsControl x:Name="TimeLineBuffsCollection"
                       Grid.Column="0"
-                      Grid.Row="1"
+                      Grid.Row="0"
                       HorizontalAlignment="Left"
-                      VerticalAlignment="Top">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"
+                      VerticalAlignment="Top"
+                      DockPanel.Dock="Left">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"
                                 VerticalAlignment="Center">
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="AllowDrop" Value="True" />
-                            </Style>
-                        </StackPanel.Resources>
-                    </StackPanel>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid Height="30">
-                        <TextBlock Text="{Binding Name}"
-                               Foreground="{Binding BuffColour}"
-                               FontSize="14"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Center"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="AllowDrop" Value="True" />
+                                        </Style>
+                                    </StackPanel.Resources>
+                                </StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="30">
+                                    <TextBlock Text="{Binding Name}"
+                                           Foreground="{Binding BuffColour}"
+                                           FontSize="14"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
-        <!-- Adds the TimeLine PopUp to show the time on mouseover-->
-        <ContentControl x:Name="TimeLinePopupViewModel"                       
+
+                </Grid>
+                <Rectangle Height="{Binding ElementName=BuffNames, Path=ActualHeight}"
+                           Fill="Transparent"
+                           Width="21"
+                           DockPanel.Dock="Left"/>
+
+                <Grid>
+                <!-- Adds the TimeLine PopUp to show the time on mouseover-->
+                <ContentControl x:Name="TimeLinePopupViewModel"                       
                         Grid.Row="1"
                         Grid.Column="2"
                         IsHitTestVisible="False"
                         Focusable="False"
                         Panel.ZIndex="99"
-                        Height="{Binding ElementName=TimeLines, Path=ActualHeight}">
-            <ContentControl.RenderTransform>
-                <TranslateTransform X="{Binding PanelX}"/>
-            </ContentControl.RenderTransform>
-        </ContentControl>
+                        Height="{Binding ElementName=TimeLines, Path=Height}">
+                    <ContentControl.RenderTransform>
+                        <TranslateTransform X="{Binding PanelX}"/>
+                    </ContentControl.RenderTransform>
+                </ContentControl>
 
-        <!--Adds the TimeLine-->
-        <ItemsControl x:Name="TimeLines"
+                <!--Adds the TimeLine-->
+
+                <ItemsControl x:Name="TimeLines"
                       Grid.Column="2"
                       Grid.Row="1"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"                      
                       VerticalAlignment="Top">
-            <i:Interaction.Behaviors>
-                <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
+                    
+                    <i:Interaction.Behaviors>
+                        <root:MouseBehaviour MouseX="{Binding PanelX, Mode=OneWayToSource}"
                                      MouseY="{Binding PanelY, Mode=OneWayToSource}"/>
-            </i:Interaction.Behaviors>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseMove" >
-                    <i:InvokeCommandAction Command="{Binding GetMousePosition}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"
+                    </i:Interaction.Behaviors>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseMove" >
+                            <i:InvokeCommandAction Command="{Binding GetMousePosition}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Left"
                                 IsHitTestVisible="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
-
+            </Grid>
+        </DockPanel>
+        </ScrollViewer>
         <!--<ItemsControl.Triggers>
         <EventTrigger RoutedEvent="MouseEnter">
             <EventTrigger.Actions>
@@ -125,5 +141,6 @@
         </EventTrigger>
     </ItemsControl.Triggers>-->
 
-    </Grid>
+    <!--</Grid>-->
+    </Border>
 </UserControl>

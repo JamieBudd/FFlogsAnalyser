@@ -20,7 +20,7 @@ namespace FFLogsAnalyser.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
 
-    public class TimeLineBaseViewModel : BaseViewModel, IDropTarget, IHandle<DeleteTimeLineEvent>
+    public class TimeLineBaseViewModel : BaseViewModel, IDropTarget, IHandle<DeleteTimeLineEvent>, IHandle<AddPersonalBuffsEvent>
     {
 
         #region Default Constructor
@@ -31,15 +31,20 @@ namespace FFLogsAnalyser.ViewModels
             _events = events;
             _events.Subscribe(this);
 
+            //setup commands
             GetMousePosition = new RelayCommand(MouseMoveCommand);
-            TotalTime = 0;
+            
 
             //Initialise the viewmodels
             TimeLineMarkers = new TimeLineMarkerViewModel();
             TimeLines = new ObservableCollection<TimeLineViewModel>();
             TimeLineBuffsCollection = new ObservableCollection<TimeLineBuff>();
             TimeLinePopupViewModel = new TimeLinePopupViewModel(_events);
+
+            //initialise variables
+            PersonalBuffCopy = new FullyObservableCollection<ItemMenuPersonalBuffs>();
             _timeLineIndex = 0;
+            TotalTime = 0;
         }
 
         #endregion
@@ -58,11 +63,16 @@ namespace FFLogsAnalyser.ViewModels
         #region Public Members
 
         /// <summary>
+        /// A copy of the personal buff collection from menu
+        /// </summary>
+        public FullyObservableCollection<ItemMenuPersonalBuffs> PersonalBuffCopy { get; private set; }
+
+        /// <summary>
         /// List of Time Markers
         /// </summary>
         public TimeLineMarkerViewModel TimeLineMarkers { get; set; }
 
-        //List of TimeLineBuffs which holds the timeLine data for each buff
+        ///List of TimeLineBuffs which holds the timeLine data for each buff
         public ObservableCollection<TimeLineBuff> TimeLineBuffs = new ObservableCollection<TimeLineBuff>();
 
         //list of TimeLineBuffs which shows the name of the buff
@@ -98,7 +108,13 @@ namespace FFLogsAnalyser.ViewModels
 
         public int StartTime;
         public int EndTime;
-        public double TotalTime;
+        public double TotalTime { get; set; }
+        public double TotalTimewidth {
+            get
+            {
+                return TotalTime / 1000;
+            }
+        }
 
         /// <summary>
         /// Gets the colour of the current TimeLine
@@ -126,6 +142,7 @@ namespace FFLogsAnalyser.ViewModels
         {
             //clears the previous TimeLine buffs
             TimeLineBuffs.Clear();
+            reportEvent.Clear();
 
             //gets the events from fflogsAPI
             await GetBuffData(fightID, reportID);
@@ -144,6 +161,9 @@ namespace FFLogsAnalyser.ViewModels
             
             //Adds the Time Markers or changes them to coincide with the longest battle time
             TimeLineMarkers.AddElements(TotalTime);
+
+            //changes the name of vulnerability up to trick attack
+            ChangeBuffName();
         }
 
         /// <summary>
@@ -201,6 +221,18 @@ namespace FFLogsAnalyser.ViewModels
                 timeLineView.AddElement();
 
             }
+            
+        }
+
+        public void ChangeBuffName()
+        {
+            foreach(var items in TimeLineBuffsCollection)
+            {
+                if(items.Name == "Vulnerability Up")
+                {
+                    items.Name = "Trick Attack";
+                }
+            }
         }
 
         public async Task GetBuffData(int fightID, string reportID)
@@ -220,13 +252,13 @@ namespace FFLogsAnalyser.ViewModels
                     TotalTime = Math.Max(TotalTime, (EndTime - StartTime));
 
                     //get events from FFlogs API and put it into the buff class
-                    string reportfighturl = Library.reportbuffs(reportID, StartTime, EndTime);
+                    string reportfighturl = Library.reportbuffs(reportID, StartTime, EndTime, PersonalBuffCopy);
                     reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
                     try
                     {
                         while (reportEvent[i].nextPageTimestamp != 0)
                         {
-                            reportfighturl = Library.reportbuffs(reportID, reportEvent[i].nextPageTimestamp, EndTime);
+                            reportfighturl = Library.reportbuffs(reportID, reportEvent[i].nextPageTimestamp, EndTime, PersonalBuffCopy);
                             reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
                             i++;
                         }
@@ -238,70 +270,101 @@ namespace FFLogsAnalyser.ViewModels
 
         public void AddEventsToTimeLineBuffs()
         {
-            foreach (var item in reportEvent.Last().events)
+            int countMedicatedapplied = 0;
+            int countMedicatedremoved = 0;
+
+            foreach (var items in reportEvent)
             {
-                if ((item.type == "applybuff" && item.targetIsFriendly == true) ||
-                    (item.type == "applydebuff" && item.targetIsFriendly == false) ||
-                    (item.type == "removedebuff" && item.targetIsFriendly == false) ||
-                    (item.type == "removebuff" && item.targetIsFriendly == true))
+                foreach (var item in items.events)
                 {
-                    int index;
-                    //finds the index if a buff is already added
-                    if (TimeLineBuffs.Any(a => a.Name == item.ability.name))
+                    if ((item.type == "applybuff" && item.targetIsFriendly == true && !Library.IsTargetPet(item.targetID, reportFightID)) ||
+                        (item.type == "applydebuff" && item.targetIsFriendly == false && !Library.IsTargetPet(item.targetID, reportFightID)) ||
+                        (item.type == "removedebuff" && item.targetIsFriendly == false && !Library.IsTargetPet(item.targetID, reportFightID)) ||
+                        (item.type == "removebuff" && item.targetIsFriendly == true && !Library.IsTargetPet(item.targetID, reportFightID)))
                     {
-                        //If it finds it, get the item
-                        var file = TimeLineBuffs.First(a => a.Name == item.ability.name);
-                        //grab its index
-                        index = TimeLineBuffs.IndexOf(file);
-                    }
-                    else
-                    {
-                        index = -1;
-                    }
-
-                    if (index == -1)
-                    {
-                        //if the ability is not already in the list create a new instance of it
-                        var timelinebuff = new TimeLineBuff();
-                        var instance = new TimeLineBuff.Instance();
-
-                        timelinebuff.Name = item.ability.name;
-                        TimeLineBuffs.Add(timelinebuff);
-
-                        //If A buff is used prepull then set the start time to the fight start time and complete the instance
-                        if (item.type == "removebuff" || item.type == "removedebuff")
+                        int index;
+                        //finds the index if a buff is already added
+                        if (TimeLineBuffs.Any(a => a.Name == item.ability.name))
                         {
-                            instance.StartTime = StartTime;
-                            instance.EndTime = item.timestamp;
-                            instance.complete = true;
+                            //If it finds it, get the item
+                            var file = TimeLineBuffs.First(a => a.Name == item.ability.name);
+                            //grab its index
+                            index = TimeLineBuffs.IndexOf(file);
+                        }
+                        else
+                        {
+                            index = -1;
                         }
 
-                        if (item.type == "applybuff" || item.type == "applydebuff")
+                        if (index == -1)
                         {
-                            instance.StartTime = item.timestamp;
-                        }
+                            //if the ability is not already in the list create a new instance of it
+                            var timelinebuff = new TimeLineBuff();
+                            var instance = new TimeLineBuff.Instance();
 
-                        TimeLineBuffs.Last().instance.Add(instance);
-                    }
-                    else
-                    {
-                        //if the ability is already in the list then check to see if the last instance has a start and end time.
-                        if (item.type == "applybuff" || item.type == "applydebuff")
-                        {
-                            if (TimeLineBuffs[index].instance.Last().complete == true)
+                            timelinebuff.Name = item.ability.name;
+                            TimeLineBuffs.Add(timelinebuff);
+
+                            //If A buff is used prepull then set the start time to the fight start time and complete the instance
+                            if (item.type == "removebuff" || item.type == "removedebuff")
                             {
-                                //adds a new instance if the list already has an end time
-                                var instance = new TimeLineBuff.Instance();
-                                instance.StartTime = item.timestamp;
-                                TimeLineBuffs[index].instance.Add(instance);
+                                instance.StartTime = StartTime;
+                                instance.EndTime = item.timestamp;
+                                instance.complete = true;
                             }
-                        }
 
-                        //puts the instance EndTime equal to the timestamp then closes the instance
-                        if (item.type == "removebuff" || item.type == "removedebuff")
+                            if (item.type == "applybuff" || item.type == "applydebuff")
+                            {
+                                instance.StartTime = item.timestamp;
+                            }
+
+                            TimeLineBuffs.Last().instance.Add(instance);
+                        }
+                        else
                         {
-                            TimeLineBuffs[index].instance.Last().EndTime = item.timestamp;
-                            TimeLineBuffs[index].instance.Last().complete = true;
+                            //if the ability is already in the list then check to see if the last instance has a start and end time.
+                            if (item.type == "applybuff" || item.type == "applydebuff")
+                            {
+                                if (TimeLineBuffs[index].instance.Last().complete == true)
+                                {
+                                    //adds a new instance if the list already has an end time
+                                    var instance = new TimeLineBuff.Instance();
+                                    instance.StartTime = item.timestamp;
+                                    TimeLineBuffs[index].instance.Add(instance);
+                                }
+                                //checks to see how many medicated buffs are applied
+                                if (item.ability.name == "Medicated" && TimeLineBuffs[index].instance.Last().complete == false)
+                                {
+                                    countMedicatedapplied += 1;
+                                }
+                                
+                            }
+
+                            //puts the instance EndTime equal to the timestamp then closes the instance
+                            if (item.type == "removebuff" || item.type == "removedebuff")
+                            {
+                                TimeLineBuffs[index].instance.Last().EndTime = item.timestamp;
+                                TimeLineBuffs[index].instance.Last().complete = true;
+
+                                //checks to see how many medicated buffs are removed and if used prepull puts the start time to 0
+                                if (item.ability.name == "Medicated" && TimeLineBuffs[index].instance.Last().complete == true)
+                                {
+                                    countMedicatedremoved += 1;
+                                    //if there are more removed debuffs than applied then sets the start time to 0
+                                    if (countMedicatedremoved > countMedicatedapplied)
+                                    {
+                                        TimeLineBuffs[index].instance.Last().StartTime = StartTime;
+                                        countMedicatedapplied = 0;
+                                        countMedicatedremoved = 0;
+                                    }
+                                    //if there are the same amount of applied as removed buffs then reset the count to 0
+                                    if(countMedicatedapplied == countMedicatedremoved)
+                                    {
+                                        countMedicatedapplied = 0;
+                                        countMedicatedremoved = 0;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -338,6 +401,7 @@ namespace FFLogsAnalyser.ViewModels
         /// Command to get the mouse position over the timeline
         /// </summary>
         public ICommand GetMousePosition { get; set; }
+        
 
         /// <summary>
         /// The command used when the mouse goes over the Timeline
@@ -365,6 +429,11 @@ namespace FFLogsAnalyser.ViewModels
                     TimeLines.RemoveAt(i);                    
                 }
             }            
+        }
+
+        public void Handle(AddPersonalBuffsEvent message)
+        {
+            PersonalBuffCopy = message.PersonalBuffName;
         }
 
         #endregion

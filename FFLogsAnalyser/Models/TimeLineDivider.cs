@@ -12,4 +12,6 @@ namespace FFLogsAnalyser.Models
         public double StartTime { get; set; }
         public Brush Colour { get; set; }
     }
+
+
 }

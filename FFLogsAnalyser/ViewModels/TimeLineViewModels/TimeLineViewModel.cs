@@ -95,6 +95,10 @@ namespace FFLogsAnalyser.ViewModels
         {            
             //Name = TimeLineBuff.Name;
             string BuffName = TimeLineBuffs.Name.Replace(' ', '_');
+            if (BuffName == "Vulnerability_Up")
+            {
+                BuffName = "Trick_Attack";
+            }
             TotalTime = Library.ConvertTime(EndTime - StartTime)*2;
             foreach (var item in TimeLineBuffs.instance)
             {
@@ -113,7 +117,7 @@ namespace FFLogsAnalyser.ViewModels
             double Minutes = Math.Floor((TotalTime / 60))+1;
             for (double i = 1; i < Minutes; i++)
             {
-                double StartTime = ((i * 60) * 2)-1;
+                double StartTime = ((i * 60) * 2);
                 TimeLineDivider tld = new TimeLineDivider();
                 tld.StartTime = StartTime;
                 Rect.Add(tld);

@@ -49,3 +49,61 @@ C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLi
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.baml
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.g.cs
 C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.exe.manifest
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.application
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.exe.manifest
+C:\Users\Jamie\source\repos\FFLogsAnalyser\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.application
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.exe.config
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.exe.manifest
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.application
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.exe
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\FFLogsAnalyser.pdb
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.Platform.Core.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.Platform.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.Platform.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Caliburn.Micro.Platform.Core.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.pdb
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\GongSolutions.WPF.DragDrop.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.csprojAssemblyReference.cache
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\CharacterParseView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\MainWindowView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\ShellView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineBaseView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineElementView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\UrlParseView.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\App.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser_MarkupCompile.cache
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser_MarkupCompile.lref
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\App.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\CharacterParseView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\MainWindowView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\RemoveFightsView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\ShellView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLinePopupView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerElementView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineMarkerView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineBaseView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineElementView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\TimeLineViews\TimeLineView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\Views\UrlParseView.baml
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.g.resources
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.Properties.Resources.resources
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.csproj.GenerateResource.cache
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.csproj.Fody.CopyLocal.cache
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.exe.manifest
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.application
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.csproj.CopyComplete
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.exe
+C:\Users\Jamie\source\repos\FFLogsAnalyser - Copy\FFLogsAnalyser\obj\Debug\FFLogsAnalyser.pdb

@@ -4,15 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FFLogsAnalyser.Views"
-        mc:Ignorable="d" Background="Gray"
+        mc:Ignorable="d" Background="Black"
         Title="FFlogs Analyser" Height="600" Width="1200">
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="12">
             <MenuItem Header="_File">
-                
+                <MenuItem Header="_Exit"
+                          x:Name="closeapp"/>
             </MenuItem>
-            <MenuItem x:Name="Home" Header="_Home">
-                
+            <MenuItem ItemsSource="{Binding IncludePersonalBuff}"
+                      Header="_Include Personal Buffs">
+
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Header" Value="{Binding BuffNameForMenu}"/>
+                        <Setter Property="IsChecked" Value="{Binding Path=IsChecked, Mode=TwoWay}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="StaysOpenOnClick" Value="True"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+
             </MenuItem>
         </Menu>
         <Grid>

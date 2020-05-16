@@ -121,28 +121,68 @@ namespace FFLogsAnalyser
     /// </summary>
     public enum Buffs
     {
+        Devotion,
+        Embolden,
+        Technical_Finish,
         Battle_Litany,
-        Trick_Attack,
-        Ley_Lines,
         Battle_Voice,
-        Chain_Strategem,
-        Blood_For_Blood,
-        Vulnerability_Up
+        Chain_Stratagem,        
+        Medicated,
+        Dragon_Sight,
+        Brotherhood,
+        Vulnerability_Up,
+        Trick_Attack,
+        Riddle_of_Fire,
+        Lance_Charge,
+        Ley_Lines,
+        Presence_of_Mind,
+        Recitation,
+        Raging_Strikes,
+        Wildfire,
+        Devilment,
+    }
+
+    /// <summary>
+    /// List of personal buff names (used in the timeline)
+    /// </summary>
+    public enum PersonalBuffs
+    {
+        Riddle_of_Fire,
+        Lance_Charge,
+        Ley_Lines,
+        Presence_of_Mind,
+        Recitation,
+        Raging_Strikes,
+        Wildfire,
+        Devilment,
     }
 
     #endregion
 
     #region Buff Colours
+    
 
     public enum BuffColours
     {
-        LightBlue,
-        Orange,
-        Purple,
+        LightYellow,
+        Indigo,
+        Salmon,
+        LightBlue,        
         Teal,
-        DarkBlue,
-        Red,
+        DarkBlue,               
+        Silver,
+        DarkRed,
+        OrangeRed,
+        NoColour,
         DarkOrange,
+        Maroon,
+        Red,
+        Purple,
+        Magenta,
+        HotPink,
+        MediumVioletRed,
+        Gold,
+        LightGreen,
     }
 
     #endregion
@@ -155,10 +195,10 @@ namespace FFLogsAnalyser
     public enum TimeLineColours
     {
         Pink,
-        Blue,
+        Aqua,
         Green,
-        Yellow,
-        Purple
+        LightYellow,
+        Violet,
     }
     #endregion
 }

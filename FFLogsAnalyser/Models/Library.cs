@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
 using FFLogsAnalyser.FFlogsClass;
+using Caliburn.Micro;
 
 namespace FFLogsAnalyser
 {
-    class Library
+    public class Library
     {
+
         #region API Key
 
         //my public fflogs API Key
@@ -78,64 +80,42 @@ namespace FFLogsAnalyser
         /// <param name="end_time">the end time of the fight from the report</param>
         /// <returns>Report url</returns>
 
-        public static string reportbuffs(string fightID, int start_time, int end_time)
+
+        public static string reportbuffs(string fightID, int start_time, int end_time, FullyObservableCollection<ItemMenuPersonalBuffs> personalbuffs)
         {
+            //list of personal buffs not checked on the menu
+            List<string> personalbuffcopy = new List<string>();
+
+            //puts personal buffs which are unchecked in a list
+            foreach (ItemMenuPersonalBuffs item1 in personalbuffs)
+            {
+                if (item1.IsChecked == false)
+                {
+                    personalbuffcopy.Add(item1.BuffName);
+                }
+            }
+
             string Abilities = "";
             //swaps the blank space in 'Buffs' enum for '%20' then formats it to be used in the parse filter for the API
             foreach (var item in Enum.GetValues(typeof(Buffs)))
             {
-                if (item.ToString() == Enum.GetValues(typeof(Buffs)).Cast<Buffs>().Last().ToString())
-                {
-                    //adds the last ability in the 'Buffs' enum to the parse filter
-                    Abilities += "ability.name%20%3D%20%22" + item.ToString().Replace("_", "%20");
-                }
+                //checks to see if the buff is a personal buff which has been selected
+                if (personalbuffcopy.Contains(item.ToString()))
+                { }
                 else
                 {
-                    //adds the abilities in the 'Buffs' enum to the parse filter
-                    Abilities += "ability.name%20%3D%20%22" + item.ToString().Replace("_", "%20") + "%22%20or%20";
-                }                
+                        //adds the abilities in the 'Buffs' enum to the parse filter
+                        Abilities += "ability.name%20%3D%20%22" + item.ToString().Replace("_", "%20") + "%22%20or%20";
+                }
+
             }
+
+            //removes the last iteration of "%22%20or%20" from the string 
+            Abilities = Abilities.Remove(Abilities.Length-11, 11);
+            
             //returns the url
-            return "https://www.fflogs.com:443/v1/report/events/"+fightID+"?translate=true&start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22" + "&" + APIKey;
+            return "https://www.fflogs.com:443/v1/report/events/summary/"+fightID+"?start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22"+ "&translate=true" + " & " + APIKey;
         }
-
-        #endregion
-
-        #region Get data from API
-
-        //private static List<ReportEvent> reportEvent = new List<ReportEvent>();
-        //public async  Task<List<ReportEvent>> GetBuffData(string reportID, string reportUrl, ReportFightID reportfightID, int fightID)
-        //{
-
-        //    reportfightID = await Library._download_serialized_json_data<ReportFightID>(reportUrl);
-        //    foreach (Fight item in reportfightID.fights)
-        //    {
-        //        if (item.id == fightID)
-        //        {
-        //            int i = 0;
-        //            int start_time = item.start_time;
-        //            int end_time = item.end_time;
-
-        //            //get events from FFlogs API and put it in the buff class
-        //            string reportfighturl = Library.reportbuffs(reportID, start_time, end_time);
-        //            reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
-        //            try
-        //            {
-        //                while (reportEvent[i].nextPageTimestamp != 0)
-        //                {
-        //                    reportfighturl = Library.reportbuffs(reportID, reportEvent[i].nextPageTimestamp, end_time);
-        //                    reportEvent.Add(await Library._download_serialized_json_data<ReportEvent>(reportfighturl));
-        //                    i++;
-        //                }
-        //            }
-        //            catch (IndexOutOfRangeException)
-        //            {
-
-        //            }
-        //        }
-        //    }
-        //    return reportEvent;
-        //}
 
         #endregion
 
@@ -149,6 +129,28 @@ namespace FFLogsAnalyser
         public static double ConvertTime(double time)
         {
             return (time / 1000);
+        }
+
+        
+        /// <summary>
+        /// Checks to see if a buff is used on a pet
+        /// </summary>
+        /// <param name="targetID">The ID to compare with</param>
+        /// <param name="reportfightID">Contains the List of Pet ID's</param>
+        /// <returns></returns>
+        public static bool IsTargetPet(double targetID, ReportFightID reportfightID)
+        {
+
+            double TargetID = targetID;
+            foreach(var item in reportfightID.friendlyPets)
+            {
+                if (TargetID == item.id)
+                {
+                    return true;
+                }
+            }
+            return false;
+            
         }
 
         #endregion
