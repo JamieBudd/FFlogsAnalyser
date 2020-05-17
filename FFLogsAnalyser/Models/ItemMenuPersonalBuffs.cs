@@ -14,11 +14,11 @@ namespace FFLogsAnalyser
     public class ItemMenuPersonalBuffs : INotifyPropertyChanged
     {
         #region Constructor
-        public ItemMenuPersonalBuffs(string buffname)
+        public ItemMenuPersonalBuffs(int buffname, string buffnamestring)
         {
             BuffName = buffname;
             IsChecked = true;
-            BuffNameForMenu = buffname.Replace("_", " ");
+            BuffNameForMenu = buffnamestring.Replace("_", " ");
         }
 
         #endregion
@@ -41,7 +41,7 @@ namespace FFLogsAnalyser
         /// <summary>
         /// Name of the Buff
         /// </summary>
-        public string BuffName { get; set; }
+        public int BuffName { get; set; }
         #endregion
     }
 }

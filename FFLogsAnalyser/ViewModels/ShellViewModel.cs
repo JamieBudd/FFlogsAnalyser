@@ -75,7 +75,7 @@ namespace FFLogsAnalyser.ViewModels
             
             foreach(PersonalBuffs buff in Enum.GetValues(typeof(PersonalBuffs)))
             {
-                IncludePersonalBuff.Add(new ItemMenuPersonalBuffs(buff.ToString()));
+                IncludePersonalBuff.Add(new ItemMenuPersonalBuffs((int)buff, buff.ToString()));
             }
         }
 

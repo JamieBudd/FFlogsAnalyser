@@ -84,7 +84,7 @@ namespace FFLogsAnalyser
         public static string reportbuffs(string fightID, int start_time, int end_time, FullyObservableCollection<ItemMenuPersonalBuffs> personalbuffs)
         {
             //list of personal buffs not checked on the menu
-            List<string> personalbuffcopy = new List<string>();
+            List<int> personalbuffcopy = new List<int>();
 
             //puts personal buffs which are unchecked in a list
             foreach (ItemMenuPersonalBuffs item1 in personalbuffs)
@@ -97,24 +97,30 @@ namespace FFLogsAnalyser
 
             string Abilities = "";
             //swaps the blank space in 'Buffs' enum for '%20' then formats it to be used in the parse filter for the API
-            foreach (var item in Enum.GetValues(typeof(Buffs)))
+            foreach (int item in Enum.GetValues(typeof(Buffs)))
             {
                 //checks to see if the buff is a personal buff which has been selected
-                if (personalbuffcopy.Contains(item.ToString()))
+                if (personalbuffcopy.Contains(item))
                 { }
                 else
                 {
-                        //adds the abilities in the 'Buffs' enum to the parse filter
-                        Abilities += "ability.name%20%3D%20%22" + item.ToString().Replace("_", "%20") + "%22%20or%20";
+                    //adds the abilities in the 'Buffs' enum to the parse filter
+                    //Abilities += "ability.name%20%3D%20%22" + item.ToString().Replace("_", "%20") + "%22%20or%20";
+
+                    //adds the abilities in the 'Buffs' enum to the parse filter
+                    Abilities += "ability.id%3D" + item + "%20or%20";
                 }
 
             }
 
             //removes the last iteration of "%22%20or%20" from the string 
-            Abilities = Abilities.Remove(Abilities.Length-11, 11);
-            
+            //Abilities = Abilities.Remove(Abilities.Length-11, 11)+ "%22";
+
+            //removes the last iteration of "%20or%20" from the string 
+            Abilities = Abilities.Remove(Abilities.Length - 8, 8);
+
             //returns the url
-            return "https://www.fflogs.com:443/v1/report/events/summary/"+fightID+"?start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "%22"+ "&translate=true" + " & " + APIKey;
+            return "https://www.fflogs.com:443/v1/report/events/summary/"+fightID+"?start="+start_time+"&end="+end_time+ "&filter=" + Abilities + "&translate=true" + " & " + APIKey;
         }
 
         #endregion

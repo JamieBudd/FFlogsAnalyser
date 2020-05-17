@@ -121,25 +121,25 @@ namespace FFLogsAnalyser
     /// </summary>
     public enum Buffs
     {
-        Devotion,
-        Embolden,
-        Technical_Finish,
-        Battle_Litany,
-        Battle_Voice,
-        Chain_Stratagem,        
-        Medicated,
-        Dragon_Sight,
-        Brotherhood,
-        Vulnerability_Up,
+        Devotion = 1001213,
+        Embolden = 1001297,
+        Technical_Finish = 1001822,
+        Battle_Litany = 1000786,
+        Battle_Voice = 1000141,
+        Chain_Stratagem = 1001221,        
+        Medicated = 1000049,
+        Left_Eye = 1001454,
+        Brotherhood = 1001185,
+        Vulnerability_Up = 1000638,
         Trick_Attack,
-        Riddle_of_Fire,
-        Lance_Charge,
-        Ley_Lines,
-        Presence_of_Mind,
-        Recitation,
-        Raging_Strikes,
-        Wildfire,
-        Devilment,
+        Riddle_of_Fire = 1001181,
+        Lance_Charge = 1001864,
+        Ley_Lines = 1000737,
+        Presence_of_Mind = 1000157,
+        Recitation = 1001896,
+        Raging_Strikes = 1000125,
+        Wildfire = 1000861,
+        Devilment = 1001825,
     }
 
     /// <summary>
@@ -147,14 +147,14 @@ namespace FFLogsAnalyser
     /// </summary>
     public enum PersonalBuffs
     {
-        Riddle_of_Fire,
-        Lance_Charge,
-        Ley_Lines,
-        Presence_of_Mind,
-        Recitation,
-        Raging_Strikes,
-        Wildfire,
-        Devilment,
+        Riddle_of_Fire = 1001181,
+        Lance_Charge = 1001864,
+        Ley_Lines = 1000737,
+        Presence_of_Mind = 1000157,
+        Recitation = 1001896,
+        Raging_Strikes = 1000125,
+        Wildfire = 1000861,
+        Devilment = 1001825,
     }
 
     #endregion
@@ -164,27 +164,26 @@ namespace FFLogsAnalyser
 
     public enum BuffColours
     {
-        LightYellow,
-        Indigo,
-        Salmon,
-        LightBlue,        
-        Teal,
-        DarkBlue,               
-        Silver,
-        DarkRed,
-        OrangeRed,
-        NoColour,
+        LightYellow = 1001213,
+        Indigo = 1001297,
+        Salmon = 1001822,
+        LightBlue = 1000786,
+        Teal = 1000141,
+        DarkBlue = 1001221,
+        Silver = 1000049,
+        DarkRed = 1001454,
+        OrangeRed = 1001185,
+        NoColour = 1000638,
         DarkOrange,
-        Maroon,
-        Red,
-        Purple,
-        Magenta,
-        HotPink,
-        MediumVioletRed,
-        Gold,
-        LightGreen,
+        Maroon = 1001181,
+        Red = 1001864,
+        Purple = 1000737,
+        Magenta = 1000157,
+        HotPink = 1001896,
+        MediumVioletRed = 1000125,
+        Gold = 1000861,
+        LightGreen = 1001825,
     }
-
     #endregion
 
     #region Timeline Colours
